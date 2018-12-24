@@ -331,6 +331,28 @@ public class GuestbookLocalServiceUtil {
         return getService().addGuestbook(userId, name, serviceContext);
     }
 
+    public static com.kooppi.guestbook.model.Guestbook updateGuestbook(
+        long userId, long guestbookId, java.lang.String name,
+        com.liferay.portal.service.ServiceContext serviceContext)
+        throws com.liferay.portal.kernel.exception.PortalException,
+            com.liferay.portal.kernel.exception.SystemException {
+        return getService()
+                   .updateGuestbook(userId, guestbookId, name, serviceContext);
+    }
+
+    public static com.kooppi.guestbook.model.Guestbook deleteGuestbook(
+        long guestbookId,
+        com.liferay.portal.service.ServiceContext serviceContext)
+        throws com.liferay.portal.kernel.exception.PortalException,
+            com.liferay.portal.kernel.exception.SystemException {
+        return getService().deleteGuestbook(guestbookId, serviceContext);
+    }
+
+    public static int getGuestbooksCount(long groupId)
+        throws com.liferay.portal.kernel.exception.SystemException {
+        return getService().getGuestbooksCount(groupId);
+    }
+
     public static java.util.List<com.kooppi.guestbook.model.Guestbook> getGuestbooks(
         long groupId)
         throws com.liferay.portal.kernel.exception.SystemException {

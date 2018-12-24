@@ -59,6 +59,12 @@ public class GuestbookLocalServiceClpInvoker {
     private String[] _methodParameterTypes57;
     private String _methodName58;
     private String[] _methodParameterTypes58;
+    private String _methodName59;
+    private String[] _methodParameterTypes59;
+    private String _methodName60;
+    private String[] _methodParameterTypes60;
+    private String _methodName61;
+    private String[] _methodParameterTypes61;
 
     public GuestbookLocalServiceClpInvoker() {
         _methodName0 = "addGuestbook";
@@ -174,13 +180,30 @@ public class GuestbookLocalServiceClpInvoker {
                 "com.liferay.portal.service.ServiceContext"
             };
 
-        _methodName57 = "getGuestbooks";
+        _methodName57 = "updateGuestbook";
 
-        _methodParameterTypes57 = new String[] { "long" };
+        _methodParameterTypes57 = new String[] {
+                "long", "long", "java.lang.String",
+                "com.liferay.portal.service.ServiceContext"
+            };
 
-        _methodName58 = "getGuestbooks";
+        _methodName58 = "deleteGuestbook";
 
-        _methodParameterTypes58 = new String[] { "long", "int", "int" };
+        _methodParameterTypes58 = new String[] {
+                "long", "com.liferay.portal.service.ServiceContext"
+            };
+
+        _methodName59 = "getGuestbooksCount";
+
+        _methodParameterTypes59 = new String[] { "long" };
+
+        _methodName60 = "getGuestbooks";
+
+        _methodParameterTypes60 = new String[] { "long" };
+
+        _methodName61 = "getGuestbooks";
+
+        _methodParameterTypes61 = new String[] { "long", "int", "int" };
     }
 
     public Object invokeMethod(String name, String[] parameterTypes,
@@ -317,11 +340,30 @@ public class GuestbookLocalServiceClpInvoker {
 
         if (_methodName57.equals(name) &&
                 Arrays.deepEquals(_methodParameterTypes57, parameterTypes)) {
-            return GuestbookLocalServiceUtil.getGuestbooks(((Long) arguments[0]).longValue());
+            return GuestbookLocalServiceUtil.updateGuestbook(((Long) arguments[0]).longValue(),
+                ((Long) arguments[1]).longValue(),
+                (java.lang.String) arguments[2],
+                (com.liferay.portal.service.ServiceContext) arguments[3]);
         }
 
         if (_methodName58.equals(name) &&
                 Arrays.deepEquals(_methodParameterTypes58, parameterTypes)) {
+            return GuestbookLocalServiceUtil.deleteGuestbook(((Long) arguments[0]).longValue(),
+                (com.liferay.portal.service.ServiceContext) arguments[1]);
+        }
+
+        if (_methodName59.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes59, parameterTypes)) {
+            return GuestbookLocalServiceUtil.getGuestbooksCount(((Long) arguments[0]).longValue());
+        }
+
+        if (_methodName60.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes60, parameterTypes)) {
+            return GuestbookLocalServiceUtil.getGuestbooks(((Long) arguments[0]).longValue());
+        }
+
+        if (_methodName61.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes61, parameterTypes)) {
             return GuestbookLocalServiceUtil.getGuestbooks(((Long) arguments[0]).longValue(),
                 ((Integer) arguments[1]).intValue(),
                 ((Integer) arguments[2]).intValue());

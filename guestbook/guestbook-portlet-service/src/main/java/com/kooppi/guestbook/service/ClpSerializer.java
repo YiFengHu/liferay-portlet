@@ -1,7 +1,6 @@
 package com.kooppi.guestbook.service;
 
 import com.kooppi.guestbook.model.EntryClp;
-import com.kooppi.guestbook.model.FooClp;
 import com.kooppi.guestbook.model.GuestbookClp;
 
 import com.liferay.portal.kernel.exception.PortalException;
@@ -94,10 +93,6 @@ public class ClpSerializer {
             return translateInputEntry(oldModel);
         }
 
-        if (oldModelClassName.equals(FooClp.class.getName())) {
-            return translateInputFoo(oldModel);
-        }
-
         if (oldModelClassName.equals(GuestbookClp.class.getName())) {
             return translateInputGuestbook(oldModel);
         }
@@ -121,16 +116,6 @@ public class ClpSerializer {
         EntryClp oldClpModel = (EntryClp) oldModel;
 
         BaseModel<?> newModel = oldClpModel.getEntryRemoteModel();
-
-        newModel.setModelAttributes(oldClpModel.getModelAttributes());
-
-        return newModel;
-    }
-
-    public static Object translateInputFoo(BaseModel<?> oldModel) {
-        FooClp oldClpModel = (FooClp) oldModel;
-
-        BaseModel<?> newModel = oldClpModel.getFooRemoteModel();
 
         newModel.setModelAttributes(oldClpModel.getModelAttributes());
 
@@ -165,40 +150,6 @@ public class ClpSerializer {
         if (oldModelClassName.equals(
                     "com.kooppi.guestbook.model.impl.EntryImpl")) {
             return translateOutputEntry(oldModel);
-        } else if (oldModelClassName.endsWith("Clp")) {
-            try {
-                ClassLoader classLoader = ClpSerializer.class.getClassLoader();
-
-                Method getClpSerializerClassMethod = oldModelClass.getMethod(
-                        "getClpSerializerClass");
-
-                Class<?> oldClpSerializerClass = (Class<?>) getClpSerializerClassMethod.invoke(oldModel);
-
-                Class<?> newClpSerializerClass = classLoader.loadClass(oldClpSerializerClass.getName());
-
-                Method translateOutputMethod = newClpSerializerClass.getMethod("translateOutput",
-                        BaseModel.class);
-
-                Class<?> oldModelModelClass = oldModel.getModelClass();
-
-                Method getRemoteModelMethod = oldModelClass.getMethod("get" +
-                        oldModelModelClass.getSimpleName() + "RemoteModel");
-
-                Object oldRemoteModel = getRemoteModelMethod.invoke(oldModel);
-
-                BaseModel<?> newModel = (BaseModel<?>) translateOutputMethod.invoke(null,
-                        oldRemoteModel);
-
-                return newModel;
-            } catch (Throwable t) {
-                if (_log.isInfoEnabled()) {
-                    _log.info("Unable to translate " + oldModelClassName, t);
-                }
-            }
-        }
-
-        if (oldModelClassName.equals("com.kooppi.guestbook.model.impl.FooImpl")) {
-            return translateOutputFoo(oldModel);
         } else if (oldModelClassName.endsWith("Clp")) {
             try {
                 ClassLoader classLoader = ClpSerializer.class.getClassLoader();
@@ -362,10 +313,6 @@ public class ClpSerializer {
             return new com.kooppi.guestbook.NoSuchEntryException();
         }
 
-        if (className.equals("com.kooppi.guestbook.NoSuchFooException")) {
-            return new com.kooppi.guestbook.NoSuchFooException();
-        }
-
         if (className.equals("com.kooppi.guestbook.NoSuchGuestbookException")) {
             return new com.kooppi.guestbook.NoSuchGuestbookException();
         }
@@ -379,16 +326,6 @@ public class ClpSerializer {
         newModel.setModelAttributes(oldModel.getModelAttributes());
 
         newModel.setEntryRemoteModel(oldModel);
-
-        return newModel;
-    }
-
-    public static Object translateOutputFoo(BaseModel<?> oldModel) {
-        FooClp newModel = new FooClp();
-
-        newModel.setModelAttributes(oldModel.getModelAttributes());
-
-        newModel.setFooRemoteModel(oldModel);
 
         return newModel;
     }

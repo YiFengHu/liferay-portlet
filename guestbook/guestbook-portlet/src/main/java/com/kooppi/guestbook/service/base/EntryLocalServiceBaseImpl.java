@@ -3,7 +3,6 @@ package com.kooppi.guestbook.service.base;
 import com.kooppi.guestbook.model.Entry;
 import com.kooppi.guestbook.service.EntryLocalService;
 import com.kooppi.guestbook.service.persistence.EntryPersistence;
-import com.kooppi.guestbook.service.persistence.FooPersistence;
 import com.kooppi.guestbook.service.persistence.GuestbookPersistence;
 
 import com.liferay.portal.kernel.bean.BeanReference;
@@ -22,6 +21,9 @@ import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.service.BaseLocalServiceImpl;
 import com.liferay.portal.service.PersistedModelLocalServiceRegistryUtil;
 import com.liferay.portal.service.persistence.UserPersistence;
+
+import com.liferay.portlet.asset.service.persistence.AssetEntryPersistence;
+import com.liferay.portlet.asset.service.persistence.AssetLinkPersistence;
 
 import java.io.Serializable;
 
@@ -49,12 +51,6 @@ public abstract class EntryLocalServiceBaseImpl extends BaseLocalServiceImpl
     protected com.kooppi.guestbook.service.EntryService entryService;
     @BeanReference(type = EntryPersistence.class)
     protected EntryPersistence entryPersistence;
-    @BeanReference(type = com.kooppi.guestbook.service.FooLocalService.class)
-    protected com.kooppi.guestbook.service.FooLocalService fooLocalService;
-    @BeanReference(type = com.kooppi.guestbook.service.FooService.class)
-    protected com.kooppi.guestbook.service.FooService fooService;
-    @BeanReference(type = FooPersistence.class)
-    protected FooPersistence fooPersistence;
     @BeanReference(type = com.kooppi.guestbook.service.GuestbookLocalService.class)
     protected com.kooppi.guestbook.service.GuestbookLocalService guestbookLocalService;
     @BeanReference(type = com.kooppi.guestbook.service.GuestbookService.class)
@@ -71,6 +67,16 @@ public abstract class EntryLocalServiceBaseImpl extends BaseLocalServiceImpl
     protected com.liferay.portal.service.UserService userService;
     @BeanReference(type = UserPersistence.class)
     protected UserPersistence userPersistence;
+    @BeanReference(type = com.liferay.portlet.asset.service.AssetEntryLocalService.class)
+    protected com.liferay.portlet.asset.service.AssetEntryLocalService assetEntryLocalService;
+    @BeanReference(type = com.liferay.portlet.asset.service.AssetEntryService.class)
+    protected com.liferay.portlet.asset.service.AssetEntryService assetEntryService;
+    @BeanReference(type = AssetEntryPersistence.class)
+    protected AssetEntryPersistence assetEntryPersistence;
+    @BeanReference(type = com.liferay.portlet.asset.service.AssetLinkLocalService.class)
+    protected com.liferay.portlet.asset.service.AssetLinkLocalService assetLinkLocalService;
+    @BeanReference(type = AssetLinkPersistence.class)
+    protected AssetLinkPersistence assetLinkPersistence;
     private String _beanIdentifier;
     private ClassLoader _classLoader;
     private EntryLocalServiceClpInvoker _clpInvoker = new EntryLocalServiceClpInvoker();
@@ -406,62 +412,6 @@ public abstract class EntryLocalServiceBaseImpl extends BaseLocalServiceImpl
     }
 
     /**
-     * Returns the foo local service.
-     *
-     * @return the foo local service
-     */
-    public com.kooppi.guestbook.service.FooLocalService getFooLocalService() {
-        return fooLocalService;
-    }
-
-    /**
-     * Sets the foo local service.
-     *
-     * @param fooLocalService the foo local service
-     */
-    public void setFooLocalService(
-        com.kooppi.guestbook.service.FooLocalService fooLocalService) {
-        this.fooLocalService = fooLocalService;
-    }
-
-    /**
-     * Returns the foo remote service.
-     *
-     * @return the foo remote service
-     */
-    public com.kooppi.guestbook.service.FooService getFooService() {
-        return fooService;
-    }
-
-    /**
-     * Sets the foo remote service.
-     *
-     * @param fooService the foo remote service
-     */
-    public void setFooService(
-        com.kooppi.guestbook.service.FooService fooService) {
-        this.fooService = fooService;
-    }
-
-    /**
-     * Returns the foo persistence.
-     *
-     * @return the foo persistence
-     */
-    public FooPersistence getFooPersistence() {
-        return fooPersistence;
-    }
-
-    /**
-     * Sets the foo persistence.
-     *
-     * @param fooPersistence the foo persistence
-     */
-    public void setFooPersistence(FooPersistence fooPersistence) {
-        this.fooPersistence = fooPersistence;
-    }
-
-    /**
      * Returns the guestbook local service.
      *
      * @return the guestbook local service
@@ -610,6 +560,101 @@ public abstract class EntryLocalServiceBaseImpl extends BaseLocalServiceImpl
      */
     public void setUserPersistence(UserPersistence userPersistence) {
         this.userPersistence = userPersistence;
+    }
+
+    /**
+     * Returns the asset entry local service.
+     *
+     * @return the asset entry local service
+     */
+    public com.liferay.portlet.asset.service.AssetEntryLocalService getAssetEntryLocalService() {
+        return assetEntryLocalService;
+    }
+
+    /**
+     * Sets the asset entry local service.
+     *
+     * @param assetEntryLocalService the asset entry local service
+     */
+    public void setAssetEntryLocalService(
+        com.liferay.portlet.asset.service.AssetEntryLocalService assetEntryLocalService) {
+        this.assetEntryLocalService = assetEntryLocalService;
+    }
+
+    /**
+     * Returns the asset entry remote service.
+     *
+     * @return the asset entry remote service
+     */
+    public com.liferay.portlet.asset.service.AssetEntryService getAssetEntryService() {
+        return assetEntryService;
+    }
+
+    /**
+     * Sets the asset entry remote service.
+     *
+     * @param assetEntryService the asset entry remote service
+     */
+    public void setAssetEntryService(
+        com.liferay.portlet.asset.service.AssetEntryService assetEntryService) {
+        this.assetEntryService = assetEntryService;
+    }
+
+    /**
+     * Returns the asset entry persistence.
+     *
+     * @return the asset entry persistence
+     */
+    public AssetEntryPersistence getAssetEntryPersistence() {
+        return assetEntryPersistence;
+    }
+
+    /**
+     * Sets the asset entry persistence.
+     *
+     * @param assetEntryPersistence the asset entry persistence
+     */
+    public void setAssetEntryPersistence(
+        AssetEntryPersistence assetEntryPersistence) {
+        this.assetEntryPersistence = assetEntryPersistence;
+    }
+
+    /**
+     * Returns the asset link local service.
+     *
+     * @return the asset link local service
+     */
+    public com.liferay.portlet.asset.service.AssetLinkLocalService getAssetLinkLocalService() {
+        return assetLinkLocalService;
+    }
+
+    /**
+     * Sets the asset link local service.
+     *
+     * @param assetLinkLocalService the asset link local service
+     */
+    public void setAssetLinkLocalService(
+        com.liferay.portlet.asset.service.AssetLinkLocalService assetLinkLocalService) {
+        this.assetLinkLocalService = assetLinkLocalService;
+    }
+
+    /**
+     * Returns the asset link persistence.
+     *
+     * @return the asset link persistence
+     */
+    public AssetLinkPersistence getAssetLinkPersistence() {
+        return assetLinkPersistence;
+    }
+
+    /**
+     * Sets the asset link persistence.
+     *
+     * @param assetLinkPersistence the asset link persistence
+     */
+    public void setAssetLinkPersistence(
+        AssetLinkPersistence assetLinkPersistence) {
+        this.assetLinkPersistence = assetLinkPersistence;
     }
 
     public void afterPropertiesSet() {

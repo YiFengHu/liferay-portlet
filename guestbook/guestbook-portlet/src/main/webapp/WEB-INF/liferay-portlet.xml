@@ -11,6 +11,7 @@
 	<portlet>
 		<portlet-name>guestbook-admin</portlet-name>
 		<icon>/icon.png</icon>
+		<asset-renderer-factory>com.kooppi.guestbook.asset.EntryAssetRendererFactory</asset-renderer-factory>
 		<header-portlet-css>/css/main.css</header-portlet-css>
 		<footer-portlet-javascript>
 			/js/main.js
@@ -24,6 +25,7 @@
 			site_administration.content
 		</control-panel-entry-category>
 		<control-panel-entry-weight>1.5</control-panel-entry-weight>
+		<asset-renderer-factory>com.kooppi.guestbook.asset.GuestbookAssetRendererFactory</asset-renderer-factory>
 		<header-portlet-css>/css/main.css</header-portlet-css>
 		<footer-portlet-javascript>
 			/js/main.js

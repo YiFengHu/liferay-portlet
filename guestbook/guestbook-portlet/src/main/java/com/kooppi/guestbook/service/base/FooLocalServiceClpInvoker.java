@@ -49,10 +49,10 @@ public class FooLocalServiceClpInvoker {
     private String[] _methodParameterTypes18;
     private String _methodName19;
     private String[] _methodParameterTypes19;
-    private String _methodName62;
-    private String[] _methodParameterTypes62;
-    private String _methodName63;
-    private String[] _methodParameterTypes63;
+    private String _methodName60;
+    private String[] _methodParameterTypes60;
+    private String _methodName61;
+    private String[] _methodParameterTypes61;
 
     public FooLocalServiceClpInvoker() {
         _methodName0 = "addFoo";
@@ -147,13 +147,13 @@ public class FooLocalServiceClpInvoker {
 
         _methodParameterTypes19 = new String[] { "com.kooppi.guestbook.model.Foo" };
 
-        _methodName62 = "getBeanIdentifier";
+        _methodName60 = "getBeanIdentifier";
 
-        _methodParameterTypes62 = new String[] {  };
+        _methodParameterTypes60 = new String[] {  };
 
-        _methodName63 = "setBeanIdentifier";
+        _methodName61 = "setBeanIdentifier";
 
-        _methodParameterTypes63 = new String[] { "java.lang.String" };
+        _methodParameterTypes61 = new String[] { "java.lang.String" };
     }
 
     public Object invokeMethod(String name, String[] parameterTypes,
@@ -269,13 +269,13 @@ public class FooLocalServiceClpInvoker {
             return FooLocalServiceUtil.updateFoo((com.kooppi.guestbook.model.Foo) arguments[0]);
         }
 
-        if (_methodName62.equals(name) &&
-                Arrays.deepEquals(_methodParameterTypes62, parameterTypes)) {
+        if (_methodName60.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes60, parameterTypes)) {
             return FooLocalServiceUtil.getBeanIdentifier();
         }
 
-        if (_methodName63.equals(name) &&
-                Arrays.deepEquals(_methodParameterTypes63, parameterTypes)) {
+        if (_methodName61.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes61, parameterTypes)) {
             FooLocalServiceUtil.setBeanIdentifier((java.lang.String) arguments[0]);
 
             return null;

@@ -3,8 +3,6 @@ package com.kooppi.guestbook.service.messaging;
 import com.kooppi.guestbook.service.ClpSerializer;
 import com.kooppi.guestbook.service.EntryLocalServiceUtil;
 import com.kooppi.guestbook.service.EntryServiceUtil;
-import com.kooppi.guestbook.service.FooLocalServiceUtil;
-import com.kooppi.guestbook.service.FooServiceUtil;
 import com.kooppi.guestbook.service.GuestbookLocalServiceUtil;
 import com.kooppi.guestbook.service.GuestbookServiceUtil;
 
@@ -27,9 +25,6 @@ public class ClpMessageListener extends BaseMessageListener {
             EntryLocalServiceUtil.clearService();
 
             EntryServiceUtil.clearService();
-            FooLocalServiceUtil.clearService();
-
-            FooServiceUtil.clearService();
             GuestbookLocalServiceUtil.clearService();
 
             GuestbookServiceUtil.clearService();

@@ -3,7 +3,6 @@
 
 <hibernate-mapping default-lazy="false" auto-import="false">
 	<import class="com.kooppi.guestbook.model.Entry" />
-	<import class="com.kooppi.guestbook.model.Foo" />
 	<import class="com.kooppi.guestbook.model.Guestbook" />
 	<class name="com.kooppi.guestbook.model.impl.EntryImpl" table="guestbook_Entry">
 		<cache usage="read-write" />
@@ -21,24 +20,6 @@
 		<property name="email" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="message" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="guestbookId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-	</class>
-	<class name="com.kooppi.guestbook.model.impl.FooImpl" table="guestbook_Foo">
-		<cache usage="read-write" />
-		<id name="fooId" type="long">
-			<generator class="assigned" />
-		</id>
-		<property name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" column="uuid_" />
-		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="createDate" type="org.hibernate.type.TimestampType" />
-		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
-		<property name="field1" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="field2" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
-		<property name="field3" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
-		<property name="field4" type="org.hibernate.type.TimestampType" />
-		<property name="field5" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 	<class name="com.kooppi.guestbook.model.impl.GuestbookImpl" table="guestbook_Guestbook">
 		<cache usage="read-write" />

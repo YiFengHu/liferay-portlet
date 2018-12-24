@@ -9,30 +9,30 @@ import java.util.Arrays;
  * @generated
  */
 public class FooServiceClpInvoker {
-    private String _methodName42;
-    private String[] _methodParameterTypes42;
-    private String _methodName43;
-    private String[] _methodParameterTypes43;
+    private String _methodName40;
+    private String[] _methodParameterTypes40;
+    private String _methodName41;
+    private String[] _methodParameterTypes41;
 
     public FooServiceClpInvoker() {
-        _methodName42 = "getBeanIdentifier";
+        _methodName40 = "getBeanIdentifier";
 
-        _methodParameterTypes42 = new String[] {  };
+        _methodParameterTypes40 = new String[] {  };
 
-        _methodName43 = "setBeanIdentifier";
+        _methodName41 = "setBeanIdentifier";
 
-        _methodParameterTypes43 = new String[] { "java.lang.String" };
+        _methodParameterTypes41 = new String[] { "java.lang.String" };
     }
 
     public Object invokeMethod(String name, String[] parameterTypes,
         Object[] arguments) throws Throwable {
-        if (_methodName42.equals(name) &&
-                Arrays.deepEquals(_methodParameterTypes42, parameterTypes)) {
+        if (_methodName40.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes40, parameterTypes)) {
             return FooServiceUtil.getBeanIdentifier();
         }
 
-        if (_methodName43.equals(name) &&
-                Arrays.deepEquals(_methodParameterTypes43, parameterTypes)) {
+        if (_methodName41.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes41, parameterTypes)) {
             FooServiceUtil.setBeanIdentifier((java.lang.String) arguments[0]);
 
             return null;

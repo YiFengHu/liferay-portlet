@@ -10,10 +10,15 @@ import com.kooppi.guestbook.model.Entry;
 import com.kooppi.guestbook.service.base.EntryLocalServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portlet.asset.model.AssetEntry;
+import com.liferay.portlet.asset.model.AssetLinkConstants;
 
 /**
  * The implementation of the entry local service.
@@ -37,20 +42,19 @@ public class EntryLocalServiceImpl extends EntryLocalServiceBaseImpl {
      */
 	
 	public Entry addEntry(long userId, long guestbookId, String name,
-	        String email, String message, ServiceContext serviceContext)
-	         throws PortalException, SystemException {
+            String email, String message, ServiceContext serviceContext) throws PortalException, SystemException {
 	    long groupId = serviceContext.getScopeGroupId();
-
+	
 	    User user = userPersistence.findByPrimaryKey(userId);
-
+	
 	    Date now = new Date();
-
+	
 	    validate(name, email, message);
-
+	
 	    long entryId = counterLocalService.increment();
-
+	
 	    Entry entry = entryPersistence.create(entryId);
-
+	
 	    entry.setUuid(serviceContext.getUuid());
 	    entry.setUserId(userId);
 	    entry.setGroupId(groupId);
@@ -63,45 +67,74 @@ public class EntryLocalServiceImpl extends EntryLocalServiceBaseImpl {
 	    entry.setName(name);
 	    entry.setEmail(email);
 	    entry.setMessage(message);
-
+	
 	    entryPersistence.update(entry);
-
+	
 	    resourceLocalService.addResources(user.getCompanyId(), groupId, userId,
-	    	       Entry.class.getName(), entryId, false, true, true);
-
+	                    Entry.class.getName(), entryId, false, true, true);
+	
+	    AssetEntry assetEntry = assetEntryLocalService.updateEntry(userId,
+	                    groupId, entry.getCreateDate(), entry.getModifiedDate(),
+	                    Entry.class.getName(), entryId, entry.getUuid(), 0,
+	                    serviceContext.getAssetCategoryIds(),
+	                    serviceContext.getAssetTagNames(), true, null, null, null,
+	                    ContentTypes.TEXT_HTML, entry.getMessage(), null, null, null,
+	                    null, 0, 0, null, false);
+	
+	    assetLinkLocalService.updateLinks(userId, assetEntry.getEntryId(),
+	                    serviceContext.getAssetLinkEntryIds(),
+	                    AssetLinkConstants.TYPE_RELATED);
+	
+	    Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+	                    Entry.class);
+	
+	    indexer.reindex(entry);
+	
 	    return entry;
-
 	}
+
 	
 	public Entry deleteEntry(long entryId, ServiceContext serviceContext)
-		    throws PortalException, SystemException {
-
-		    Entry entry = getEntry(entryId);
-
-		    resourceLocalService.deleteResource(
-		        serviceContext.getCompanyId(), Entry.class.getName(),
-		        ResourceConstants.SCOPE_INDIVIDUAL, entryId);
-
-		        entry = deleteEntry(entryId);
-
-		        return entry;
-	}
+            throws PortalException, SystemException {
 	
-	public Entry updateEntry(
-	        long userId, long guestbookId, long entryId, String name,
-	        String email, String message, ServiceContext serviceContext)
-	    throws PortalException, SystemException {
-
-	    long groupId = serviceContext.getScopeGroupId();
-
-	    User user = userPersistence.findByPrimaryKey(userId);
-
-	    Date now = new Date();
-
-	    validate(name, email, message);
-
 	    Entry entry = getEntry(entryId);
+	
+	    resourceLocalService.deleteResource(serviceContext.getCompanyId(),
+	                    Entry.class.getName(), ResourceConstants.SCOPE_INDIVIDUAL,
+	                    entryId);
+	
+	    AssetEntry assetEntry = assetEntryLocalService.fetchEntry(
+	                    Entry.class.getName(), entryId);
+	
+	    assetLinkLocalService.deleteLinks(assetEntry.getEntryId());
+	
+	    assetEntryLocalService.deleteEntry(assetEntry);
+	
+	    Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+	                    Entry.class);
+	
+	    indexer.delete(entry);
+	
+	    entry = deleteEntry(entryId);
+	
+	    return entry;
+	}
 
+	
+	public Entry updateEntry(long userId, long guestbookId, long entryId,
+            String name, String email, String message,
+            ServiceContext serviceContext) throws PortalException,
+            SystemException {
+	    long groupId = serviceContext.getScopeGroupId();
+	
+	    User user = userPersistence.findByPrimaryKey(userId);
+	
+	    Date now = new Date();
+	
+	    validate(name, email, message);
+	
+	    Entry entry = getEntry(entryId);
+	
 	    entry.setUserId(userId);
 	    entry.setUserName(user.getFullName());
 	    entry.setName(name);
@@ -109,16 +142,34 @@ public class EntryLocalServiceImpl extends EntryLocalServiceBaseImpl {
 	    entry.setMessage(message);
 	    entry.setModifiedDate(serviceContext.getModifiedDate(now));
 	    entry.setExpandoBridgeAttributes(serviceContext);
-
+	
 	    entryPersistence.update(entry);
-
-	    resourceLocalService.updateResources(
-	        user.getCompanyId(), groupId, Entry.class.getName(), entryId,
-	        serviceContext.getGroupPermissions(),
-	        serviceContext.getGuestPermissions());
-
+	
+	    resourceLocalService.updateResources(user.getCompanyId(), groupId,
+	                    Entry.class.getName(), entryId,
+	                    serviceContext.getGroupPermissions(),
+	                    serviceContext.getGuestPermissions());
+	
+	    AssetEntry assetEntry = assetEntryLocalService.updateEntry(userId,
+	                    groupId, entry.getCreateDate(), entry.getModifiedDate(),
+	                    Entry.class.getName(), entryId, entry.getUuid(), 0,
+	                    serviceContext.getAssetCategoryIds(),
+	                    serviceContext.getAssetTagNames(), true, null, null, null,
+	                    ContentTypes.TEXT_HTML, entry.getMessage(), null, null, null,
+	                    null, 0, 0, null, false);
+	
+	    assetLinkLocalService.updateLinks(userId, assetEntry.getEntryId(),
+	                    serviceContext.getAssetLinkEntryIds(),
+	                    AssetLinkConstants.TYPE_RELATED);
+	
+	    Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+	                    Entry.class);
+	
+	    indexer.reindex(entry);
+	
 	    return entry;
 	}
+
 
 	
 	public int getEntriesCount(long groupId, long guestbookId) throws SystemException {

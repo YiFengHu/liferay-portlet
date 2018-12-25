@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<workflow-definition xmlns="urn:liferay.com:liferay-workflow_6.2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:liferay.com:liferay-workflow_6.2.0 http://www.liferay.com/dtd/liferay-workflow-definition_6_2_0.xsd">
+    <name>Sprint Movein</name>
+    <version>1</version>
+    <state>
+        <name>open</name>
+        <metadata><![CDATA[{"xy":[20,240],"transitions":{"develop":{"bendpoints":[]}}}]]></metadata>
+        <initial>true</initial>
+        <transitions>
+            <transition>
+                <name>develop</name>
+                <target>develop</target>
+            </transition>
+        </transitions>
+    </state>
+    <task>
+        <name>develop</name>
+        <metadata><![CDATA[{"xy":[160,225],"transitions":{"movin Dev":{"bendpoints":[]}}}]]></metadata>
+        <assignments>
+            <user/>
+        </assignments>
+        <transitions>
+            <transition>
+                <name>movin Dev</name>
+                <target>Dev QA</target>
+            </transition>
+        </transitions>
+    </task>
+    <state>
+        <name>done</name>
+        <metadata><![CDATA[{"xy":[1315,240],"terminal":true}]]></metadata>
+        <actions>
+            <action>
+                <name>approve</name>
+                <script><![CDATA[Packages.com.liferay.portal.kernel.workflow.WorkflowStatusManagerUtil.updateStatus(Packages.com.liferay.portal.kernel.workflow.WorkflowConstants.toStatus("approved"), workflowContext);]]></script>
+                <script-language>javascript</script-language>
+                <execution-type>onEntry</execution-type>
+            </action>
+        </actions>
+    </state>
+    <task>
+        <name>Dev QA</name>
+        <metadata><![CDATA[{"xy":[320,500],"transitions":{"movin Preprd":{"bendpoints":[]}}}]]></metadata>
+        <actions>
+            <notification>
+                <name>Req: Dev QA</name>
+                <template>/* specify task notification template */</template>
+                <template-language>text</template-language>
+                <notification-type>email</notification-type>
+                <execution-type>onEntry</execution-type>
+            </notification>
+        </actions>
+        <assignments>
+            <roles>
+                <role>
+                    <role-type>site</role-type>
+                    <name>Site Administrator</name>
+                    <auto-create>true</auto-create>
+                </role>
+            </roles>
+        </assignments>
+        <transitions>
+            <transition>
+                <name>reject Dev</name>
+                <target>Dev Fix</target>
+            </transition>
+            <transition>
+                <name>movin Preprd</name>
+                <target>Req: Preprd QA</target>
+            </transition>
+            <transition>
+                <name>movin Preprd</name>
+                <target>Preprd QA</target>
+            </transition>
+        </transitions>
+    </task>
+    <task>
+        <name>Dev Fix</name>
+        <metadata><![CDATA[{"xy":[410,220],"transitions":{"resubmit Dev":{"xy":[-65,-60],"bendpoints":[]}}}]]></metadata>
+        <actions>
+            <notification>
+                <name>Dev QA rejected</name>
+                <template>/* specify task notification template */</template>
+                <template-language>text</template-language>
+                <notification-type>email</notification-type>
+                <execution-type>onEntry</execution-type>
+            </notification>
+        </actions>
+        <assignments>
+            <user></user>
+        </assignments>
+        <transitions>
+            <transition>
+                <name>resubmit Dev</name>
+                <target>Dev QA</target>
+            </transition>
+        </transitions>
+    </task>
+    <task>
+        <name>Preprd QA</name>
+        <metadata><![CDATA[{"xy":[670,500],"transitions":{"movin Prd":{"xy":[-85,0],"bendpoints":[]}}}]]></metadata>
+        <actions>
+            <notification>
+                <name>Req: Preprd QA</name>
+                <template>/* specify task notification template */</template>
+                <template-language>text</template-language>
+                <notification-type>email</notification-type>
+                <execution-type>onEntry</execution-type>
+            </notification>
+        </actions>
+        <assignments>
+            <roles>
+                <role>
+                    <role-type>site</role-type>
+                    <name>Site Administrator</name>
+                    <auto-create>true</auto-create>
+                </role>
+            </roles>
+        </assignments>
+        <transitions>
+            <transition>
+                <name>reject Preprd</name>
+                <target>Preprd Fix</target>
+            </transition>
+            <transition>
+                <name>movin Prd</name>
+                <target>Prd QA</target>
+            </transition>
+        </transitions>
+    </task>
+    <task>
+        <name>Preprd Fix</name>
+        <metadata><![CDATA[{"xy":[660,220],"transitions":{"resubmit Preprd":{"xy":[-79,11],"bendpoints":[[669,419]]}}}]]></metadata>
+        <actions>
+            <notification>
+                <name>Preprd QA rejected</name>
+                <template>/* specify task notification template */</template>
+                <template-language>freemarker</template-language>
+                <notification-type>email</notification-type>
+                <execution-type>onEntry</execution-type>
+            </notification>
+        </actions>
+        <assignments>
+            <user></user>
+        </assignments>
+        <transitions>
+            <transition>
+                <name>resubmit Preprd</name>
+                <target>Req: Preprd QA</target>
+            </transition>
+            <transition>
+                <name>resubmit Preprd</name>
+                <target>Preprd QA</target>
+            </transition>
+        </transitions>
+    </task>
+    <task>
+        <name>Prd QA</name>
+        <metadata><![CDATA[{"xy":[1020,500],"transitions":{"deploy":{"xy":[-70,-10],"bendpoints":[]}}}]]></metadata>
+        <actions>
+            <notification>
+                <name>Req: Prd QA</name>
+                <template>/* specify task notification template */</template>
+                <template-language>freemarker</template-language>
+                <notification-type>email</notification-type>
+                <execution-type>onEntry</execution-type>
+            </notification>
+        </actions>
+        <assignments>
+            <roles>
+                <role>
+                    <role-type>site</role-type>
+                    <name>Site Administrator</name>
+                    <auto-create>true</auto-create>
+                </role>
+            </roles>
+        </assignments>
+        <transitions>
+            <transition>
+                <name>reject Prd</name>
+                <target>Prd Fix</target>
+            </transition>
+            <transition>
+                <name>deploy</name>
+                <target>Deploy</target>
+            </transition>
+        </transitions>
+    </task>
+    <task>
+        <name>Prd Fix</name>
+        <metadata><![CDATA[{"xy":[1020,220],"transitions":{"resubmit Prd":{"bendpoints":[[1113,404]]}}}]]></metadata>
+        <actions>
+            <notification>
+                <name>Prd QA rejected</name>
+                <template>/* specify task notification template */</template>
+                <template-language>freemarker</template-language>
+                <notification-type>email</notification-type>
+                <execution-type>onEntry</execution-type>
+            </notification>
+        </actions>
+        <assignments>
+            <user></user>
+        </assignments>
+        <transitions>
+            <transition>
+                <name>resubmit Prd</name>
+                <target>Prd QA</target>
+            </transition>
+        </transitions>
+    </task>
+    <task>
+        <name>Deploy</name>
+        <metadata><![CDATA[{"xy":[1300,500],"transitions":{"done":{"bendpoints":[]}}}]]></metadata>
+        <actions>
+            <notification>
+                <name>QA Passed. Start deploy</name>
+                <template>/* specify task notification template */</template>
+                <template-language>freemarker</template-language>
+                <notification-type>email</notification-type>
+                <execution-type>onEntry</execution-type>
+            </notification>
+        </actions>
+        <assignments>
+            <roles>
+                <role>
+                    <role-type>site</role-type>
+                    <name>Site Administrator</name>
+                </role>
+            </roles>
+        </assignments>
+        <transitions>
+            <transition>
+                <name>done</name>
+                <target>done</target>
+            </transition>
+        </transitions>
+    </task>
+</workflow-definition>

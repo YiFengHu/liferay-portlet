@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.kooppi.guestbook.GuestbookNameException;
+import com.kooppi.guestbook.NoSuchGuestbookException;
 import com.kooppi.guestbook.model.Entry;
 import com.kooppi.guestbook.model.Guestbook;
 import com.kooppi.guestbook.service.EntryLocalServiceUtil;
@@ -13,7 +14,10 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
@@ -67,7 +71,8 @@ public class GuestbookLocalServiceImpl extends GuestbookLocalServiceBaseImpl {
 	    guestbook.setModifiedDate(serviceContext.getModifiedDate(now));
 	    guestbook.setName(name);
 	    guestbook.setExpandoBridgeAttributes(serviceContext);
-	
+	    guestbook.setStatus(WorkflowConstants.STATUS_DRAFT);
+
 	    guestbookPersistence.update(guestbook);
 	
 	    resourceLocalService.addResources(user.getCompanyId(), groupId, userId,
@@ -91,6 +96,10 @@ public class GuestbookLocalServiceImpl extends GuestbookLocalServiceBaseImpl {
 	
 	    indexer.reindex(guestbook);
 	
+	    WorkflowHandlerRegistryUtil.startWorkflowInstance(guestbook.getCompanyId(), 
+	            guestbook.getGroupId(), guestbook.getUserId(), Guestbook.class.getName(), 
+	            guestbook.getPrimaryKey(), guestbook, serviceContext);
+
 	    return guestbook;
 	
 	}
@@ -182,13 +191,20 @@ public class GuestbookLocalServiceImpl extends GuestbookLocalServiceBaseImpl {
 	public int getGuestbooksCount(long groupId) throws SystemException {
         return guestbookPersistence.countByGroupId(groupId);
 	}
-
 	
-	public List<Guestbook> getGuestbooks (long groupId) throws SystemException {
-	    return guestbookPersistence.findByGroupId(groupId);
+	public Guestbook getGuestbookByG_N(long groupId, String name,
+			OrderByComparator orderByComparator) throws SystemException,
+			NoSuchGuestbookException {
+		
+		return guestbookPersistence.findByG_N_First(groupId, name,
+				orderByComparator);
+	}
+	
+	public List<Guestbook> getGuestbooks(long groupId, int status) throws SystemException {
+	    return guestbookPersistence.findByG_S(groupId, WorkflowConstants.STATUS_APPROVED);
 	}
 
-	public List<Guestbook> getGuestbooks (long groupId, int start, int end)
+	public List<Guestbook> getGuestbooks(long groupId, int start, int end)
 	   throws SystemException {
 	    return guestbookPersistence.findByGroupId(groupId, start, end);
 	}
@@ -198,4 +214,33 @@ public class GuestbookLocalServiceImpl extends GuestbookLocalServiceBaseImpl {
 	       throw new GuestbookNameException();
 	    }
 	}
+	
+	public Guestbook updateStatus(long userId, long guestbookId, int status,
+		       ServiceContext serviceContext) throws PortalException,
+		       SystemException {
+
+		    User user = userLocalService.getUser(userId);
+		    Guestbook guestbook = getGuestbook(guestbookId);
+
+		    guestbook.setStatus(status);
+		    guestbook.setStatusByUserId(userId);
+		    guestbook.setStatusByUserName(user.getFullName());
+		    guestbook.setStatusDate(new Date());
+
+		    guestbookPersistence.update(guestbook);
+
+		    if (status == WorkflowConstants.STATUS_APPROVED) {
+
+		       assetEntryLocalService.updateVisible(Guestbook.class.getName(),
+		          guestbookId, true);
+
+		    } else {
+
+		       assetEntryLocalService.updateVisible(Guestbook.class.getName(),
+		          guestbookId, false);
+		    }
+
+		    return guestbook;
+		}
+
 }

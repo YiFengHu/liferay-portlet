@@ -22,11 +22,21 @@
         <liferay-ui:search-container-row
                 className="com.kooppi.guestbook.model.Guestbook" modelVar="guestbook">
 
-                <liferay-ui:search-container-column-text property="name" />
+                <portlet:renderURL var="viewGuestbook">
+        			<portlet:param name="mvcPath" value="/html/guestbookadmin/view_guestbook.jsp" />
+        			<portlet:param name="guestbookId" value="<%= String.valueOf(guestbook.getGuestbookId()) %>" />
+				</portlet:renderURL>
 
-                <liferay-ui:search-container-column-jsp
-                    path="/html/guestbookadmin/guestbook_actions.jsp"
-                    align="right" />
+				<liferay-ui:search-container-column-text property="name" href="<%= viewGuestbook %>" />
+
+    			<liferay-ui:search-container-column-text name="status" >
+        			<aui:workflow-status showIcon="<%= false %>" showLabel="<%= false %>"
+            			status="<%= guestbook.getStatus() %>" />
+    			</liferay-ui:search-container-column-text>
+
+    			<liferay-ui:search-container-column-jsp
+            			path="/html/guestbookadmin/guestbook_actions.jsp"
+            			align="right" />
 
         </liferay-ui:search-container-row>
 

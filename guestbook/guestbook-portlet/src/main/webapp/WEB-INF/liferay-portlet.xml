@@ -4,23 +4,19 @@
 <liferay-portlet-app>
 	<portlet>
 		<portlet-name>guestbook</portlet-name>
-		<icon>/icon.png</icon>
-		<header-portlet-css>/css/main.css</header-portlet-css>
-		<footer-portlet-javascript>/js/main.js</footer-portlet-javascript>
-	</portlet>
-	<portlet>
-		<portlet-name>guestbook-admin</portlet-name>
-		<icon>/icon.png</icon>
+		<icon>/entry.png</icon>
 		<asset-renderer-factory>com.kooppi.guestbook.asset.EntryAssetRendererFactory</asset-renderer-factory>
+		<workflow-handler>com.kooppi.guestbook.workflow.EntryWorkflowHandler</workflow-handler>
+    	<workflow-handler>com.kooppi.guestbook.workflow.GuestbookWorkflowHandler</workflow-handler>
 		<header-portlet-css>/css/main.css</header-portlet-css>
 		<footer-portlet-javascript>
 			/js/main.js
 		</footer-portlet-javascript>
-		<css-class-wrapper>guestbook-admin-portlet</css-class-wrapper>
+		<css-class-wrapper>guestbook-portlet</css-class-wrapper>
 	</portlet>
 	<portlet>
 		<portlet-name>guestbook-admin</portlet-name>
-		<icon>/icon.png</icon>
+		<icon>/guestbook.png</icon>
 		<control-panel-entry-category>
 			site_administration.content
 		</control-panel-entry-category>

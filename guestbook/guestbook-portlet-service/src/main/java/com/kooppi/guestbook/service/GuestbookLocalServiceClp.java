@@ -64,6 +64,10 @@ public class GuestbookLocalServiceClp implements GuestbookLocalService {
     private String[] _methodParameterTypes27;
     private String _methodName28;
     private String[] _methodParameterTypes28;
+    private String _methodName29;
+    private String[] _methodParameterTypes29;
+    private String _methodName30;
+    private String[] _methodParameterTypes30;
 
     public GuestbookLocalServiceClp(InvokableLocalService invokableLocalService) {
         _invokableLocalService = invokableLocalService;
@@ -198,13 +202,27 @@ public class GuestbookLocalServiceClp implements GuestbookLocalService {
 
         _methodParameterTypes26 = new String[] { "long" };
 
-        _methodName27 = "getGuestbooks";
+        _methodName27 = "getGuestbookByG_N";
 
-        _methodParameterTypes27 = new String[] { "long" };
+        _methodParameterTypes27 = new String[] {
+                "long", "java.lang.String",
+                "com.liferay.portal.kernel.util.OrderByComparator"
+            };
 
         _methodName28 = "getGuestbooks";
 
-        _methodParameterTypes28 = new String[] { "long", "int", "int" };
+        _methodParameterTypes28 = new String[] { "long", "int" };
+
+        _methodName29 = "getGuestbooks";
+
+        _methodParameterTypes29 = new String[] { "long", "int", "int" };
+
+        _methodName30 = "updateStatus";
+
+        _methodParameterTypes30 = new String[] {
+                "long", "long", "int",
+                "com.liferay.portal.service.ServiceContext"
+            };
     }
 
     @Override
@@ -988,14 +1006,54 @@ public class GuestbookLocalServiceClp implements GuestbookLocalService {
     }
 
     @Override
-    public java.util.List<com.kooppi.guestbook.model.Guestbook> getGuestbooks(
-        long groupId)
-        throws com.liferay.portal.kernel.exception.SystemException {
+    public com.kooppi.guestbook.model.Guestbook getGuestbookByG_N(
+        long groupId, java.lang.String name,
+        com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+        throws com.kooppi.guestbook.NoSuchGuestbookException,
+            com.liferay.portal.kernel.exception.SystemException {
         Object returnObj = null;
 
         try {
             returnObj = _invokableLocalService.invokeMethod(_methodName27,
-                    _methodParameterTypes27, new Object[] { groupId });
+                    _methodParameterTypes27,
+                    new Object[] {
+                        groupId,
+                        
+                    ClpSerializer.translateInput(name),
+                        
+                    ClpSerializer.translateInput(orderByComparator)
+                    });
+        } catch (Throwable t) {
+            t = ClpSerializer.translateThrowable(t);
+
+            if (t instanceof com.kooppi.guestbook.NoSuchGuestbookException) {
+                throw (com.kooppi.guestbook.NoSuchGuestbookException) t;
+            }
+
+            if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+                throw (com.liferay.portal.kernel.exception.SystemException) t;
+            }
+
+            if (t instanceof RuntimeException) {
+                throw (RuntimeException) t;
+            } else {
+                throw new RuntimeException(t.getClass().getName() +
+                    " is not a valid exception");
+            }
+        }
+
+        return (com.kooppi.guestbook.model.Guestbook) ClpSerializer.translateOutput(returnObj);
+    }
+
+    @Override
+    public java.util.List<com.kooppi.guestbook.model.Guestbook> getGuestbooks(
+        long groupId, int status)
+        throws com.liferay.portal.kernel.exception.SystemException {
+        Object returnObj = null;
+
+        try {
+            returnObj = _invokableLocalService.invokeMethod(_methodName28,
+                    _methodParameterTypes28, new Object[] { groupId, status });
         } catch (Throwable t) {
             t = ClpSerializer.translateThrowable(t);
 
@@ -1021,8 +1079,8 @@ public class GuestbookLocalServiceClp implements GuestbookLocalService {
         Object returnObj = null;
 
         try {
-            returnObj = _invokableLocalService.invokeMethod(_methodName28,
-                    _methodParameterTypes28,
+            returnObj = _invokableLocalService.invokeMethod(_methodName29,
+                    _methodParameterTypes29,
                     new Object[] { groupId, start, end });
         } catch (Throwable t) {
             t = ClpSerializer.translateThrowable(t);
@@ -1040,5 +1098,47 @@ public class GuestbookLocalServiceClp implements GuestbookLocalService {
         }
 
         return (java.util.List<com.kooppi.guestbook.model.Guestbook>) ClpSerializer.translateOutput(returnObj);
+    }
+
+    @Override
+    public com.kooppi.guestbook.model.Guestbook updateStatus(long userId,
+        long guestbookId, int status,
+        com.liferay.portal.service.ServiceContext serviceContext)
+        throws com.liferay.portal.kernel.exception.PortalException,
+            com.liferay.portal.kernel.exception.SystemException {
+        Object returnObj = null;
+
+        try {
+            returnObj = _invokableLocalService.invokeMethod(_methodName30,
+                    _methodParameterTypes30,
+                    new Object[] {
+                        userId,
+                        
+                    guestbookId,
+                        
+                    status,
+                        
+                    ClpSerializer.translateInput(serviceContext)
+                    });
+        } catch (Throwable t) {
+            t = ClpSerializer.translateThrowable(t);
+
+            if (t instanceof com.liferay.portal.kernel.exception.PortalException) {
+                throw (com.liferay.portal.kernel.exception.PortalException) t;
+            }
+
+            if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+                throw (com.liferay.portal.kernel.exception.SystemException) t;
+            }
+
+            if (t instanceof RuntimeException) {
+                throw (RuntimeException) t;
+            } else {
+                throw new RuntimeException(t.getClass().getName() +
+                    " is not a valid exception");
+            }
+        }
+
+        return (com.kooppi.guestbook.model.Guestbook) ClpSerializer.translateOutput(returnObj);
     }
 }

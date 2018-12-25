@@ -348,11 +348,6 @@ public class EntryLocalServiceUtil {
             message, serviceContext);
     }
 
-    public static int getEntriesCount(long groupId, long guestbookId)
-        throws com.liferay.portal.kernel.exception.SystemException {
-        return getService().getEntriesCount(groupId, guestbookId);
-    }
-
     public static java.util.List<com.kooppi.guestbook.model.Entry> getEntries(
         long groupId, long guestbookId)
         throws com.liferay.portal.kernel.exception.SystemException {
@@ -360,9 +355,22 @@ public class EntryLocalServiceUtil {
     }
 
     public static java.util.List<com.kooppi.guestbook.model.Entry> getEntries(
-        long groupId, long guestbookId, int start, int end)
+        long groupId, long guestbookId, int status, int start, int end)
         throws com.liferay.portal.kernel.exception.SystemException {
-        return getService().getEntries(groupId, guestbookId, start, end);
+        return getService().getEntries(groupId, guestbookId, status, start, end);
+    }
+
+    public static int getEntriesCount(long groupId, long guestbookId, int status)
+        throws com.liferay.portal.kernel.exception.SystemException {
+        return getService().getEntriesCount(groupId, guestbookId, status);
+    }
+
+    public static com.kooppi.guestbook.model.Entry updateStatus(long userId,
+        long entryId, int status,
+        com.liferay.portal.service.ServiceContext serviceContext)
+        throws com.liferay.portal.kernel.exception.PortalException,
+            com.liferay.portal.kernel.exception.SystemException {
+        return getService().updateStatus(userId, entryId, status, serviceContext);
     }
 
     public static void clearService() {

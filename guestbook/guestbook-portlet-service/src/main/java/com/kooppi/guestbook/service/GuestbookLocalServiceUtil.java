@@ -353,16 +353,33 @@ public class GuestbookLocalServiceUtil {
         return getService().getGuestbooksCount(groupId);
     }
 
+    public static com.kooppi.guestbook.model.Guestbook getGuestbookByG_N(
+        long groupId, java.lang.String name,
+        com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+        throws com.kooppi.guestbook.NoSuchGuestbookException,
+            com.liferay.portal.kernel.exception.SystemException {
+        return getService().getGuestbookByG_N(groupId, name, orderByComparator);
+    }
+
     public static java.util.List<com.kooppi.guestbook.model.Guestbook> getGuestbooks(
-        long groupId)
+        long groupId, int status)
         throws com.liferay.portal.kernel.exception.SystemException {
-        return getService().getGuestbooks(groupId);
+        return getService().getGuestbooks(groupId, status);
     }
 
     public static java.util.List<com.kooppi.guestbook.model.Guestbook> getGuestbooks(
         long groupId, int start, int end)
         throws com.liferay.portal.kernel.exception.SystemException {
         return getService().getGuestbooks(groupId, start, end);
+    }
+
+    public static com.kooppi.guestbook.model.Guestbook updateStatus(
+        long userId, long guestbookId, int status,
+        com.liferay.portal.service.ServiceContext serviceContext)
+        throws com.liferay.portal.kernel.exception.PortalException,
+            com.liferay.portal.kernel.exception.SystemException {
+        return getService()
+                   .updateStatus(userId, guestbookId, status, serviceContext);
     }
 
     public static void clearService() {

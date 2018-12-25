@@ -24,5 +24,21 @@
 <%@ page import="com.kooppi.guestbook.service.permission.GuestbookPermission" %>
 <%@ page import="com.kooppi.guestbook.service.permission.EntryPermission" %>
 
+<%@ page import="java.util.Map" %>
+<%@ page import="java.util.HashMap" %>
+
+<%@ page import="com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil" %>
+<%@ page import="com.liferay.portlet.asset.service.AssetTagLocalServiceUtil" %>
+
+<%@ page import="com.liferay.portlet.asset.model.AssetEntry" %>
+<%@ page import="com.liferay.portlet.asset.model.AssetTag" %>
+
+<%@ page import="com.liferay.portal.kernel.util.ListUtil" %>
+
+<%@ page import="com.liferay.portal.util.PortalUtil" %>
+<%@ page import="com.liferay.portal.kernel.language.LanguageUtil" %>
+
+<%@ page import="com.liferay.portal.kernel.workflow.WorkflowConstants" %>
+
 <portlet:defineObjects />
 <theme:defineObjects />

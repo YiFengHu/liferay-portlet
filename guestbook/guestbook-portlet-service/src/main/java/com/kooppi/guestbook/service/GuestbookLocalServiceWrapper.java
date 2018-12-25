@@ -375,10 +375,20 @@ public class GuestbookLocalServiceWrapper implements GuestbookLocalService,
     }
 
     @Override
+    public com.kooppi.guestbook.model.Guestbook getGuestbookByG_N(
+        long groupId, java.lang.String name,
+        com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+        throws com.kooppi.guestbook.NoSuchGuestbookException,
+            com.liferay.portal.kernel.exception.SystemException {
+        return _guestbookLocalService.getGuestbookByG_N(groupId, name,
+            orderByComparator);
+    }
+
+    @Override
     public java.util.List<com.kooppi.guestbook.model.Guestbook> getGuestbooks(
-        long groupId)
+        long groupId, int status)
         throws com.liferay.portal.kernel.exception.SystemException {
-        return _guestbookLocalService.getGuestbooks(groupId);
+        return _guestbookLocalService.getGuestbooks(groupId, status);
     }
 
     @Override
@@ -386,6 +396,16 @@ public class GuestbookLocalServiceWrapper implements GuestbookLocalService,
         long groupId, int start, int end)
         throws com.liferay.portal.kernel.exception.SystemException {
         return _guestbookLocalService.getGuestbooks(groupId, start, end);
+    }
+
+    @Override
+    public com.kooppi.guestbook.model.Guestbook updateStatus(long userId,
+        long guestbookId, int status,
+        com.liferay.portal.service.ServiceContext serviceContext)
+        throws com.liferay.portal.kernel.exception.PortalException,
+            com.liferay.portal.kernel.exception.SystemException {
+        return _guestbookLocalService.updateStatus(userId, guestbookId, status,
+            serviceContext);
     }
 
     /**

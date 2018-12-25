@@ -363,12 +363,6 @@ public class EntryLocalServiceWrapper implements EntryLocalService,
     }
 
     @Override
-    public int getEntriesCount(long groupId, long guestbookId)
-        throws com.liferay.portal.kernel.exception.SystemException {
-        return _entryLocalService.getEntriesCount(groupId, guestbookId);
-    }
-
-    @Override
     public java.util.List<com.kooppi.guestbook.model.Entry> getEntries(
         long groupId, long guestbookId)
         throws com.liferay.portal.kernel.exception.SystemException {
@@ -377,9 +371,26 @@ public class EntryLocalServiceWrapper implements EntryLocalService,
 
     @Override
     public java.util.List<com.kooppi.guestbook.model.Entry> getEntries(
-        long groupId, long guestbookId, int start, int end)
+        long groupId, long guestbookId, int status, int start, int end)
         throws com.liferay.portal.kernel.exception.SystemException {
-        return _entryLocalService.getEntries(groupId, guestbookId, start, end);
+        return _entryLocalService.getEntries(groupId, guestbookId, status,
+            start, end);
+    }
+
+    @Override
+    public int getEntriesCount(long groupId, long guestbookId, int status)
+        throws com.liferay.portal.kernel.exception.SystemException {
+        return _entryLocalService.getEntriesCount(groupId, guestbookId, status);
+    }
+
+    @Override
+    public com.kooppi.guestbook.model.Entry updateStatus(long userId,
+        long entryId, int status,
+        com.liferay.portal.service.ServiceContext serviceContext)
+        throws com.liferay.portal.kernel.exception.PortalException,
+            com.liferay.portal.kernel.exception.SystemException {
+        return _entryLocalService.updateStatus(userId, entryId, status,
+            serviceContext);
     }
 
     /**

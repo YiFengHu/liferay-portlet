@@ -22,14 +22,16 @@ public class EntrySoap implements Serializable {
     private String _userName;
     private Date _createDate;
     private Date _modifiedDate;
-    private String _name;
-    private String _email;
     private String _message;
+    private String _name;
+    private String _conferenceRoomName;
+    private String _useDate;
     private long _guestbookId;
     private int _status;
     private long _statusByUserId;
     private String _statusByUserName;
     private Date _statusDate;
+    private Long _statusTaskAssigneeId;
 
     public EntrySoap() {
     }
@@ -45,14 +47,16 @@ public class EntrySoap implements Serializable {
         soapModel.setUserName(model.getUserName());
         soapModel.setCreateDate(model.getCreateDate());
         soapModel.setModifiedDate(model.getModifiedDate());
-        soapModel.setName(model.getName());
-        soapModel.setEmail(model.getEmail());
         soapModel.setMessage(model.getMessage());
+        soapModel.setName(model.getName());
+        soapModel.setConferenceRoomName(model.getConferenceRoomName());
+        soapModel.setUseDate(model.getUseDate());
         soapModel.setGuestbookId(model.getGuestbookId());
         soapModel.setStatus(model.getStatus());
         soapModel.setStatusByUserId(model.getStatusByUserId());
         soapModel.setStatusByUserName(model.getStatusByUserName());
         soapModel.setStatusDate(model.getStatusDate());
+        soapModel.setStatusTaskAssigneeId(model.getStatusTaskAssigneeId());
 
         return soapModel;
     }
@@ -165,6 +169,14 @@ public class EntrySoap implements Serializable {
         _modifiedDate = modifiedDate;
     }
 
+    public String getMessage() {
+        return _message;
+    }
+
+    public void setMessage(String message) {
+        _message = message;
+    }
+
     public String getName() {
         return _name;
     }
@@ -173,20 +185,20 @@ public class EntrySoap implements Serializable {
         _name = name;
     }
 
-    public String getEmail() {
-        return _email;
+    public String getConferenceRoomName() {
+        return _conferenceRoomName;
     }
 
-    public void setEmail(String email) {
-        _email = email;
+    public void setConferenceRoomName(String conferenceRoomName) {
+        _conferenceRoomName = conferenceRoomName;
     }
 
-    public String getMessage() {
-        return _message;
+    public String getUseDate() {
+        return _useDate;
     }
 
-    public void setMessage(String message) {
-        _message = message;
+    public void setUseDate(String useDate) {
+        _useDate = useDate;
     }
 
     public long getGuestbookId() {
@@ -227,5 +239,13 @@ public class EntrySoap implements Serializable {
 
     public void setStatusDate(Date statusDate) {
         _statusDate = statusDate;
+    }
+
+    public Long getStatusTaskAssigneeId() {
+        return _statusTaskAssigneeId;
+    }
+
+    public void setStatusTaskAssigneeId(Long statusTaskAssigneeId) {
+        _statusTaskAssigneeId = statusTaskAssigneeId;
     }
 }

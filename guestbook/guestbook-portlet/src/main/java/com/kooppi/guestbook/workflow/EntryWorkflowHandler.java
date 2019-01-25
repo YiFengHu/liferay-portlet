@@ -18,7 +18,6 @@ public class EntryWorkflowHandler extends BaseWorkflowHandler {
 
     @Override
     public String getClassName() {
-
         return CLASS_NAME;
     }
 
@@ -29,9 +28,21 @@ public class EntryWorkflowHandler extends BaseWorkflowHandler {
 
     @Override
     public Object updateStatus(int status,
-            Map<String, Serializable> workflowContext) throws PortalException,
+            Map<String, Serializable> workflowContext) throws PortalException, 
             SystemException {
 
+    	System.out.println("updateStatus");
+    	System.out.println("status: "+status);
+    	System.out.println("workflowContext: "+workflowContext);
+    	
+    	long assigneeId = 0;
+    	try {
+    			assigneeId = GetterUtil.getLong(
+                (Long)workflowContext.get("assigneeId"));
+    	}catch(Exception e) {
+    		e.printStackTrace();
+    	}
+    	
             long userId = GetterUtil.getLong(
                 (String)workflowContext.get(WorkflowConstants.CONTEXT_USER_ID));
             long entryId = GetterUtil.getLong(
@@ -42,8 +53,8 @@ public class EntryWorkflowHandler extends BaseWorkflowHandler {
                 "serviceContext");
 
             return EntryLocalServiceUtil.updateStatus(
-                userId, entryId, status, serviceContext);
-
+                userId, entryId, status, assigneeId, serviceContext);
+    	
     }
 
     public static final String CLASS_NAME = Entry.class.getName();

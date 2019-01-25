@@ -382,6 +382,10 @@ public class GuestbookLocalServiceUtil {
                    .updateStatus(userId, guestbookId, status, serviceContext);
     }
 
+    public static void assignTaskOneLevel() {
+        getService().assignTaskOneLevel();
+    }
+
     public static void clearService() {
         _service = null;
     }

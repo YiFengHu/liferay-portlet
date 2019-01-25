@@ -32,15 +32,17 @@ public class EntryClp extends BaseModelImpl<Entry> implements Entry {
     private String _userName;
     private Date _createDate;
     private Date _modifiedDate;
-    private String _name;
-    private String _email;
     private String _message;
+    private String _name;
+    private String _conferenceRoomName;
+    private String _useDate;
     private long _guestbookId;
     private int _status;
     private long _statusByUserId;
     private String _statusByUserUuid;
     private String _statusByUserName;
     private Date _statusDate;
+    private Long _statusTaskAssigneeId;
     private BaseModel<?> _entryRemoteModel;
     private Class<?> _clpSerializerClass = com.kooppi.guestbook.service.ClpSerializer.class;
 
@@ -89,14 +91,16 @@ public class EntryClp extends BaseModelImpl<Entry> implements Entry {
         attributes.put("userName", getUserName());
         attributes.put("createDate", getCreateDate());
         attributes.put("modifiedDate", getModifiedDate());
-        attributes.put("name", getName());
-        attributes.put("email", getEmail());
         attributes.put("message", getMessage());
+        attributes.put("name", getName());
+        attributes.put("conferenceRoomName", getConferenceRoomName());
+        attributes.put("useDate", getUseDate());
         attributes.put("guestbookId", getGuestbookId());
         attributes.put("status", getStatus());
         attributes.put("statusByUserId", getStatusByUserId());
         attributes.put("statusByUserName", getStatusByUserName());
         attributes.put("statusDate", getStatusDate());
+        attributes.put("statusTaskAssigneeId", getStatusTaskAssigneeId());
 
         return attributes;
     }
@@ -151,22 +155,29 @@ public class EntryClp extends BaseModelImpl<Entry> implements Entry {
             setModifiedDate(modifiedDate);
         }
 
+        String message = (String) attributes.get("message");
+
+        if (message != null) {
+            setMessage(message);
+        }
+
         String name = (String) attributes.get("name");
 
         if (name != null) {
             setName(name);
         }
 
-        String email = (String) attributes.get("email");
+        String conferenceRoomName = (String) attributes.get(
+                "conferenceRoomName");
 
-        if (email != null) {
-            setEmail(email);
+        if (conferenceRoomName != null) {
+            setConferenceRoomName(conferenceRoomName);
         }
 
-        String message = (String) attributes.get("message");
+        String useDate = (String) attributes.get("useDate");
 
-        if (message != null) {
-            setMessage(message);
+        if (useDate != null) {
+            setUseDate(useDate);
         }
 
         Long guestbookId = (Long) attributes.get("guestbookId");
@@ -197,6 +208,13 @@ public class EntryClp extends BaseModelImpl<Entry> implements Entry {
 
         if (statusDate != null) {
             setStatusDate(statusDate);
+        }
+
+        Long statusTaskAssigneeId = (Long) attributes.get(
+                "statusTaskAssigneeId");
+
+        if (statusTaskAssigneeId != null) {
+            setStatusTaskAssigneeId(statusTaskAssigneeId);
         }
     }
 
@@ -387,6 +405,28 @@ public class EntryClp extends BaseModelImpl<Entry> implements Entry {
     }
 
     @Override
+    public String getMessage() {
+        return _message;
+    }
+
+    @Override
+    public void setMessage(String message) {
+        _message = message;
+
+        if (_entryRemoteModel != null) {
+            try {
+                Class<?> clazz = _entryRemoteModel.getClass();
+
+                Method method = clazz.getMethod("setMessage", String.class);
+
+                method.invoke(_entryRemoteModel, message);
+            } catch (Exception e) {
+                throw new UnsupportedOperationException(e);
+            }
+        }
+    }
+
+    @Override
     public String getName() {
         return _name;
     }
@@ -409,21 +449,22 @@ public class EntryClp extends BaseModelImpl<Entry> implements Entry {
     }
 
     @Override
-    public String getEmail() {
-        return _email;
+    public String getConferenceRoomName() {
+        return _conferenceRoomName;
     }
 
     @Override
-    public void setEmail(String email) {
-        _email = email;
+    public void setConferenceRoomName(String conferenceRoomName) {
+        _conferenceRoomName = conferenceRoomName;
 
         if (_entryRemoteModel != null) {
             try {
                 Class<?> clazz = _entryRemoteModel.getClass();
 
-                Method method = clazz.getMethod("setEmail", String.class);
+                Method method = clazz.getMethod("setConferenceRoomName",
+                        String.class);
 
-                method.invoke(_entryRemoteModel, email);
+                method.invoke(_entryRemoteModel, conferenceRoomName);
             } catch (Exception e) {
                 throw new UnsupportedOperationException(e);
             }
@@ -431,21 +472,21 @@ public class EntryClp extends BaseModelImpl<Entry> implements Entry {
     }
 
     @Override
-    public String getMessage() {
-        return _message;
+    public String getUseDate() {
+        return _useDate;
     }
 
     @Override
-    public void setMessage(String message) {
-        _message = message;
+    public void setUseDate(String useDate) {
+        _useDate = useDate;
 
         if (_entryRemoteModel != null) {
             try {
                 Class<?> clazz = _entryRemoteModel.getClass();
 
-                Method method = clazz.getMethod("setMessage", String.class);
+                Method method = clazz.getMethod("setUseDate", String.class);
 
-                method.invoke(_entryRemoteModel, message);
+                method.invoke(_entryRemoteModel, useDate);
             } catch (Exception e) {
                 throw new UnsupportedOperationException(e);
             }
@@ -568,6 +609,29 @@ public class EntryClp extends BaseModelImpl<Entry> implements Entry {
                 Method method = clazz.getMethod("setStatusDate", Date.class);
 
                 method.invoke(_entryRemoteModel, statusDate);
+            } catch (Exception e) {
+                throw new UnsupportedOperationException(e);
+            }
+        }
+    }
+
+    @Override
+    public Long getStatusTaskAssigneeId() {
+        return _statusTaskAssigneeId;
+    }
+
+    @Override
+    public void setStatusTaskAssigneeId(Long statusTaskAssigneeId) {
+        _statusTaskAssigneeId = statusTaskAssigneeId;
+
+        if (_entryRemoteModel != null) {
+            try {
+                Class<?> clazz = _entryRemoteModel.getClass();
+
+                Method method = clazz.getMethod("setStatusTaskAssigneeId",
+                        Long.class);
+
+                method.invoke(_entryRemoteModel, statusTaskAssigneeId);
             } catch (Exception e) {
                 throw new UnsupportedOperationException(e);
             }
@@ -735,14 +799,16 @@ public class EntryClp extends BaseModelImpl<Entry> implements Entry {
         clone.setUserName(getUserName());
         clone.setCreateDate(getCreateDate());
         clone.setModifiedDate(getModifiedDate());
-        clone.setName(getName());
-        clone.setEmail(getEmail());
         clone.setMessage(getMessage());
+        clone.setName(getName());
+        clone.setConferenceRoomName(getConferenceRoomName());
+        clone.setUseDate(getUseDate());
         clone.setGuestbookId(getGuestbookId());
         clone.setStatus(getStatus());
         clone.setStatusByUserId(getStatusByUserId());
         clone.setStatusByUserName(getStatusByUserName());
         clone.setStatusDate(getStatusDate());
+        clone.setStatusTaskAssigneeId(getStatusTaskAssigneeId());
 
         return clone;
     }
@@ -792,7 +858,7 @@ public class EntryClp extends BaseModelImpl<Entry> implements Entry {
 
     @Override
     public String toString() {
-        StringBundler sb = new StringBundler(33);
+        StringBundler sb = new StringBundler(37);
 
         sb.append("{uuid=");
         sb.append(getUuid());
@@ -810,12 +876,14 @@ public class EntryClp extends BaseModelImpl<Entry> implements Entry {
         sb.append(getCreateDate());
         sb.append(", modifiedDate=");
         sb.append(getModifiedDate());
-        sb.append(", name=");
-        sb.append(getName());
-        sb.append(", email=");
-        sb.append(getEmail());
         sb.append(", message=");
         sb.append(getMessage());
+        sb.append(", name=");
+        sb.append(getName());
+        sb.append(", conferenceRoomName=");
+        sb.append(getConferenceRoomName());
+        sb.append(", useDate=");
+        sb.append(getUseDate());
         sb.append(", guestbookId=");
         sb.append(getGuestbookId());
         sb.append(", status=");
@@ -826,6 +894,8 @@ public class EntryClp extends BaseModelImpl<Entry> implements Entry {
         sb.append(getStatusByUserName());
         sb.append(", statusDate=");
         sb.append(getStatusDate());
+        sb.append(", statusTaskAssigneeId=");
+        sb.append(getStatusTaskAssigneeId());
         sb.append("}");
 
         return sb.toString();
@@ -833,7 +903,7 @@ public class EntryClp extends BaseModelImpl<Entry> implements Entry {
 
     @Override
     public String toXmlString() {
-        StringBundler sb = new StringBundler(52);
+        StringBundler sb = new StringBundler(58);
 
         sb.append("<model><model-name>");
         sb.append("com.kooppi.guestbook.model.Entry");
@@ -872,16 +942,20 @@ public class EntryClp extends BaseModelImpl<Entry> implements Entry {
         sb.append(getModifiedDate());
         sb.append("]]></column-value></column>");
         sb.append(
+            "<column><column-name>message</column-name><column-value><![CDATA[");
+        sb.append(getMessage());
+        sb.append("]]></column-value></column>");
+        sb.append(
             "<column><column-name>name</column-name><column-value><![CDATA[");
         sb.append(getName());
         sb.append("]]></column-value></column>");
         sb.append(
-            "<column><column-name>email</column-name><column-value><![CDATA[");
-        sb.append(getEmail());
+            "<column><column-name>conferenceRoomName</column-name><column-value><![CDATA[");
+        sb.append(getConferenceRoomName());
         sb.append("]]></column-value></column>");
         sb.append(
-            "<column><column-name>message</column-name><column-value><![CDATA[");
-        sb.append(getMessage());
+            "<column><column-name>useDate</column-name><column-value><![CDATA[");
+        sb.append(getUseDate());
         sb.append("]]></column-value></column>");
         sb.append(
             "<column><column-name>guestbookId</column-name><column-value><![CDATA[");
@@ -902,6 +976,10 @@ public class EntryClp extends BaseModelImpl<Entry> implements Entry {
         sb.append(
             "<column><column-name>statusDate</column-name><column-value><![CDATA[");
         sb.append(getStatusDate());
+        sb.append("]]></column-value></column>");
+        sb.append(
+            "<column><column-name>statusTaskAssigneeId</column-name><column-value><![CDATA[");
+        sb.append(getStatusTaskAssigneeId());
         sb.append("]]></column-value></column>");
 
         sb.append("</model>");

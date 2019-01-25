@@ -46,14 +46,16 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
         attributes.put("userName", getUserName());
         attributes.put("createDate", getCreateDate());
         attributes.put("modifiedDate", getModifiedDate());
-        attributes.put("name", getName());
-        attributes.put("email", getEmail());
         attributes.put("message", getMessage());
+        attributes.put("name", getName());
+        attributes.put("conferenceRoomName", getConferenceRoomName());
+        attributes.put("useDate", getUseDate());
         attributes.put("guestbookId", getGuestbookId());
         attributes.put("status", getStatus());
         attributes.put("statusByUserId", getStatusByUserId());
         attributes.put("statusByUserName", getStatusByUserName());
         attributes.put("statusDate", getStatusDate());
+        attributes.put("statusTaskAssigneeId", getStatusTaskAssigneeId());
 
         return attributes;
     }
@@ -108,22 +110,29 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
             setModifiedDate(modifiedDate);
         }
 
+        String message = (String) attributes.get("message");
+
+        if (message != null) {
+            setMessage(message);
+        }
+
         String name = (String) attributes.get("name");
 
         if (name != null) {
             setName(name);
         }
 
-        String email = (String) attributes.get("email");
+        String conferenceRoomName = (String) attributes.get(
+                "conferenceRoomName");
 
-        if (email != null) {
-            setEmail(email);
+        if (conferenceRoomName != null) {
+            setConferenceRoomName(conferenceRoomName);
         }
 
-        String message = (String) attributes.get("message");
+        String useDate = (String) attributes.get("useDate");
 
-        if (message != null) {
-            setMessage(message);
+        if (useDate != null) {
+            setUseDate(useDate);
         }
 
         Long guestbookId = (Long) attributes.get("guestbookId");
@@ -154,6 +163,13 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
 
         if (statusDate != null) {
             setStatusDate(statusDate);
+        }
+
+        Long statusTaskAssigneeId = (Long) attributes.get(
+                "statusTaskAssigneeId");
+
+        if (statusTaskAssigneeId != null) {
+            setStatusTaskAssigneeId(statusTaskAssigneeId);
         }
     }
 
@@ -360,6 +376,26 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
     }
 
     /**
+    * Returns the message of this entry.
+    *
+    * @return the message of this entry
+    */
+    @Override
+    public java.lang.String getMessage() {
+        return _entry.getMessage();
+    }
+
+    /**
+    * Sets the message of this entry.
+    *
+    * @param message the message of this entry
+    */
+    @Override
+    public void setMessage(java.lang.String message) {
+        _entry.setMessage(message);
+    }
+
+    /**
     * Returns the name of this entry.
     *
     * @return the name of this entry
@@ -380,43 +416,43 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
     }
 
     /**
-    * Returns the email of this entry.
+    * Returns the conference room name of this entry.
     *
-    * @return the email of this entry
+    * @return the conference room name of this entry
     */
     @Override
-    public java.lang.String getEmail() {
-        return _entry.getEmail();
+    public java.lang.String getConferenceRoomName() {
+        return _entry.getConferenceRoomName();
     }
 
     /**
-    * Sets the email of this entry.
+    * Sets the conference room name of this entry.
     *
-    * @param email the email of this entry
+    * @param conferenceRoomName the conference room name of this entry
     */
     @Override
-    public void setEmail(java.lang.String email) {
-        _entry.setEmail(email);
+    public void setConferenceRoomName(java.lang.String conferenceRoomName) {
+        _entry.setConferenceRoomName(conferenceRoomName);
     }
 
     /**
-    * Returns the message of this entry.
+    * Returns the use date of this entry.
     *
-    * @return the message of this entry
+    * @return the use date of this entry
     */
     @Override
-    public java.lang.String getMessage() {
-        return _entry.getMessage();
+    public java.lang.String getUseDate() {
+        return _entry.getUseDate();
     }
 
     /**
-    * Sets the message of this entry.
+    * Sets the use date of this entry.
     *
-    * @param message the message of this entry
+    * @param useDate the use date of this entry
     */
     @Override
-    public void setMessage(java.lang.String message) {
-        _entry.setMessage(message);
+    public void setUseDate(java.lang.String useDate) {
+        _entry.setUseDate(useDate);
     }
 
     /**
@@ -539,6 +575,26 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
     @Override
     public void setStatusDate(java.util.Date statusDate) {
         _entry.setStatusDate(statusDate);
+    }
+
+    /**
+    * Returns the status task assignee ID of this entry.
+    *
+    * @return the status task assignee ID of this entry
+    */
+    @Override
+    public java.lang.Long getStatusTaskAssigneeId() {
+        return _entry.getStatusTaskAssigneeId();
+    }
+
+    /**
+    * Sets the status task assignee ID of this entry.
+    *
+    * @param statusTaskAssigneeId the status task assignee ID of this entry
+    */
+    @Override
+    public void setStatusTaskAssigneeId(java.lang.Long statusTaskAssigneeId) {
+        _entry.setStatusTaskAssigneeId(statusTaskAssigneeId);
     }
 
     /**

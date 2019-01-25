@@ -69,6 +69,8 @@ public class GuestbookLocalServiceClpInvoker {
     private String[] _methodParameterTypes66;
     private String _methodName68;
     private String[] _methodParameterTypes68;
+    private String _methodName69;
+    private String[] _methodParameterTypes69;
 
     public GuestbookLocalServiceClpInvoker() {
         _methodName0 = "addGuestbook";
@@ -222,6 +224,10 @@ public class GuestbookLocalServiceClpInvoker {
                 "long", "long", "int",
                 "com.liferay.portal.service.ServiceContext"
             };
+
+        _methodName69 = "assignTaskOneLevel";
+
+        _methodParameterTypes69 = new String[] {  };
     }
 
     public Object invokeMethod(String name, String[] parameterTypes,
@@ -401,6 +407,13 @@ public class GuestbookLocalServiceClpInvoker {
                 ((Long) arguments[1]).longValue(),
                 ((Integer) arguments[2]).intValue(),
                 (com.liferay.portal.service.ServiceContext) arguments[3]);
+        }
+
+        if (_methodName69.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes69, parameterTypes)) {
+            GuestbookLocalServiceUtil.assignTaskOneLevel();
+
+            return null;
         }
 
         throw new UnsupportedOperationException();

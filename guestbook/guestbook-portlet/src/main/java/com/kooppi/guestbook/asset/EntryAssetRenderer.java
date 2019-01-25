@@ -79,13 +79,12 @@ public class EntryAssetRenderer extends BaseAssetRenderer {
 
         @Override
         public String getSummary(Locale locale) {
-                return "Name: " + _entry.getName() + ". Message: "
-                                + _entry.getMessage();
+                return "Conference Room Booking Request: \n Room Number \""+_entry.getConferenceRoomName()+"\" at "+_entry.getUseDate()+" by "+_entry.getUserName();
         }
 
         @Override
         public String getTitle(Locale locale) {
-                return _entry.getMessage();
+                return "Conference Room Booking Request";
         }
 
         @Override
@@ -108,7 +107,7 @@ public class EntryAssetRenderer extends BaseAssetRenderer {
                         RenderResponse renderResponse, String template) throws Exception {
 
                 if (template.equals(TEMPLATE_FULL_CONTENT)) {
-                        renderRequest.setAttribute("gb_entry", _entry);
+                        renderRequest.setAttribute("rm_Entry", _entry);
 
                         return "/html/guestbook/" + template + ".jsp";
                 }

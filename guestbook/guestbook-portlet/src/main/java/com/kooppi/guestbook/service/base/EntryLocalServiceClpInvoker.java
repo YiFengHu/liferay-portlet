@@ -65,8 +65,14 @@ public class EntryLocalServiceClpInvoker {
     private String[] _methodParameterTypes64;
     private String _methodName65;
     private String[] _methodParameterTypes65;
+    private String _methodName66;
+    private String[] _methodParameterTypes66;
     private String _methodName67;
     private String[] _methodParameterTypes67;
+    private String _methodName69;
+    private String[] _methodParameterTypes69;
+    private String _methodName70;
+    private String[] _methodParameterTypes70;
 
     public EntryLocalServiceClpInvoker() {
         _methodName0 = "addEntry";
@@ -195,22 +201,34 @@ public class EntryLocalServiceClpInvoker {
 
         _methodParameterTypes63 = new String[] { "long", "long" };
 
-        _methodName64 = "getEntries";
+        _methodName64 = "getEntriesByGroup";
 
-        _methodParameterTypes64 = new String[] {
+        _methodParameterTypes64 = new String[] { "long" };
+
+        _methodName65 = "getEntriesCountByGroup";
+
+        _methodParameterTypes65 = new String[] { "long" };
+
+        _methodName66 = "getEntries";
+
+        _methodParameterTypes66 = new String[] {
                 "long", "long", "int", "int", "int"
             };
 
-        _methodName65 = "getEntriesCount";
+        _methodName67 = "getEntriesCount";
 
-        _methodParameterTypes65 = new String[] { "long", "long", "int" };
+        _methodParameterTypes67 = new String[] { "long", "long", "int" };
 
-        _methodName67 = "updateStatus";
+        _methodName69 = "updateStatus";
 
-        _methodParameterTypes67 = new String[] {
-                "long", "long", "int",
+        _methodParameterTypes69 = new String[] {
+                "long", "long", "int", "long",
                 "com.liferay.portal.service.ServiceContext"
             };
+
+        _methodName70 = "getUpperLevelApprover";
+
+        _methodParameterTypes70 = new String[] {  };
     }
 
     public Object invokeMethod(String name, String[] parameterTypes,
@@ -373,6 +391,16 @@ public class EntryLocalServiceClpInvoker {
 
         if (_methodName64.equals(name) &&
                 Arrays.deepEquals(_methodParameterTypes64, parameterTypes)) {
+            return EntryLocalServiceUtil.getEntriesByGroup(((Long) arguments[0]).longValue());
+        }
+
+        if (_methodName65.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes65, parameterTypes)) {
+            return EntryLocalServiceUtil.getEntriesCountByGroup(((Long) arguments[0]).longValue());
+        }
+
+        if (_methodName66.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes66, parameterTypes)) {
             return EntryLocalServiceUtil.getEntries(((Long) arguments[0]).longValue(),
                 ((Long) arguments[1]).longValue(),
                 ((Integer) arguments[2]).intValue(),
@@ -380,19 +408,25 @@ public class EntryLocalServiceClpInvoker {
                 ((Integer) arguments[4]).intValue());
         }
 
-        if (_methodName65.equals(name) &&
-                Arrays.deepEquals(_methodParameterTypes65, parameterTypes)) {
+        if (_methodName67.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes67, parameterTypes)) {
             return EntryLocalServiceUtil.getEntriesCount(((Long) arguments[0]).longValue(),
                 ((Long) arguments[1]).longValue(),
                 ((Integer) arguments[2]).intValue());
         }
 
-        if (_methodName67.equals(name) &&
-                Arrays.deepEquals(_methodParameterTypes67, parameterTypes)) {
+        if (_methodName69.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes69, parameterTypes)) {
             return EntryLocalServiceUtil.updateStatus(((Long) arguments[0]).longValue(),
                 ((Long) arguments[1]).longValue(),
                 ((Integer) arguments[2]).intValue(),
-                (com.liferay.portal.service.ServiceContext) arguments[3]);
+                ((Long) arguments[3]).longValue(),
+                (com.liferay.portal.service.ServiceContext) arguments[4]);
+        }
+
+        if (_methodName70.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes70, parameterTypes)) {
+            return EntryLocalServiceUtil.getUpperLevelApprover();
         }
 
         throw new UnsupportedOperationException();

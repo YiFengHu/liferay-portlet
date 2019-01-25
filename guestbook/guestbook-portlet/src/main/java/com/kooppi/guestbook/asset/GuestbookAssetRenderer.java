@@ -79,12 +79,12 @@ public class GuestbookAssetRenderer extends BaseAssetRenderer {
 
         @Override
         public String getSummary(Locale locale) {
-                return "Name: " + _guestbook.getName();
+                return "Conference Room: " + _guestbook.getName();
         }
 
         @Override
         public String getTitle(Locale locale) {
-                return _guestbook.getName();
+                return "Conference Room: " + _guestbook.getName();
         }
 
         @Override
@@ -108,7 +108,7 @@ public class GuestbookAssetRenderer extends BaseAssetRenderer {
                         RenderResponse renderResponse, String template) throws Exception {
 
                 if (template.equals(TEMPLATE_FULL_CONTENT)) {
-                        renderRequest.setAttribute("gb_guestbook", _guestbook);
+                        renderRequest.setAttribute("rm_Guestbook", _guestbook);
 
                         return "/html/guestbookadmin/" + template + ".jsp";
                 }

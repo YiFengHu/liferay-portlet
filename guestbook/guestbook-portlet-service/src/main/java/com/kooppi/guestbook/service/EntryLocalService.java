@@ -294,8 +294,8 @@ public interface EntryLocalService extends BaseLocalService,
         throws java.lang.Throwable;
 
     public com.kooppi.guestbook.model.Entry addEntry(long userId,
-        long guestbookId, java.lang.String name, java.lang.String email,
-        java.lang.String message,
+        long guestbookId, java.lang.String name, java.lang.String roomNumber,
+        java.lang.String useDate,
         com.liferay.portal.service.ServiceContext serviceContext)
         throws com.liferay.portal.kernel.exception.PortalException,
             com.liferay.portal.kernel.exception.SystemException;
@@ -307,7 +307,7 @@ public interface EntryLocalService extends BaseLocalService,
 
     public com.kooppi.guestbook.model.Entry updateEntry(long userId,
         long guestbookId, long entryId, java.lang.String name,
-        java.lang.String email, java.lang.String message,
+        java.lang.String roomNumber, java.lang.String useDate,
         com.liferay.portal.service.ServiceContext serviceContext)
         throws com.liferay.portal.kernel.exception.PortalException,
             com.liferay.portal.kernel.exception.SystemException;
@@ -315,6 +315,15 @@ public interface EntryLocalService extends BaseLocalService,
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public java.util.List<com.kooppi.guestbook.model.Entry> getEntries(
         long groupId, long guestbookId)
+        throws com.liferay.portal.kernel.exception.SystemException;
+
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+    public java.util.List<com.kooppi.guestbook.model.Entry> getEntriesByGroup(
+        long groupId)
+        throws com.liferay.portal.kernel.exception.SystemException;
+
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+    public int getEntriesCountByGroup(long groupId)
         throws com.liferay.portal.kernel.exception.SystemException;
 
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -327,8 +336,11 @@ public interface EntryLocalService extends BaseLocalService,
         throws com.liferay.portal.kernel.exception.SystemException;
 
     public com.kooppi.guestbook.model.Entry updateStatus(long userId,
-        long entryId, int status,
+        long entryId, int status, long assigneeId,
         com.liferay.portal.service.ServiceContext serviceContext)
         throws com.liferay.portal.kernel.exception.PortalException,
             com.liferay.portal.kernel.exception.SystemException;
+
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+    public int getUpperLevelApprover();
 }

@@ -23,9 +23,10 @@
 			<basic name="modifiedDate">
 				<temporal>TIMESTAMP</temporal>
 			</basic>
-			<basic name="name" />
-			<basic name="email" />
 			<basic name="message" />
+			<basic name="name" />
+			<basic name="conferenceRoomName" />
+			<basic name="useDate" />
 			<basic name="guestbookId" />
 			<basic name="status" />
 			<basic name="statusByUserId" />
@@ -33,6 +34,7 @@
 			<basic name="statusDate">
 				<temporal>TIMESTAMP</temporal>
 			</basic>
+			<basic name="statusTaskAssigneeId" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
@@ -71,11 +73,11 @@
 		</attributes>
 	</mapped-superclass>
 	<entity class="com.kooppi.guestbook.model.impl.EntryImpl" name="Entry">
-		<table name="guestbook_Entry" />
+		<table name="rm_Entry" />
 		<attributes />
 	</entity>
 	<entity class="com.kooppi.guestbook.model.impl.GuestbookImpl" name="Guestbook">
-		<table name="guestbook_Guestbook" />
+		<table name="rm_Guestbook" />
 		<attributes />
 	</entity>
 </entity-mappings>

@@ -1,7 +1,7 @@
 <!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 6.2.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_6_2_0.dtd">
 
 <service-builder package-path="com.kooppi.guestbook">
-	<namespace>guestbook</namespace>
+	<namespace>rm</namespace>
 	<entity name="Guestbook" local-service="true" uuid="true">
 
 		<!-- PK fields -->
@@ -19,7 +19,7 @@
 		<column name="userName" type="String"></column>
 		<column name="createDate" type="Date"></column>
 		<column name="modifiedDate" type="Date"></column>
-        <column type="String" name="name"></column>
+        <column  name="name" type="String"></column>
         <column name="status" type="int" />
 		<column name="statusByUserId" type="long" />
 		<column name="statusByUserName" type="String" />
@@ -57,14 +57,20 @@
 		<column name="userName" type="String"></column>
 		<column name="createDate" type="Date"></column>
 		<column name="modifiedDate" type="Date"></column>
-        <column name="name" type="String"></column>
-        <column name="email" type="String"></column>
-        <column name="message" type="String"></column>
+		<column name="message" type="String"></column>
+		<column name="name" type="String"></column>
+        <column name="conferenceRoomName" type="String"></column>
+        <column name="useDate" type="String"></column>
         <column name="guestbookId" type="long"></column>
         <column name="status" type="int" />
 		<column name="statusByUserId" type="long" />
 		<column name="statusByUserName" type="String" />
 		<column name="statusDate" type="Date" />
+		<column name="statusTaskAssigneeId" type="Long" />
+		
+		<finder name="GroupId" return-type="Collection">
+            <finder-column name="groupId"></finder-column>
+        </finder>
 		
         <finder name="G_G" return-type="Collection">
             <finder-column name="groupId"></finder-column>

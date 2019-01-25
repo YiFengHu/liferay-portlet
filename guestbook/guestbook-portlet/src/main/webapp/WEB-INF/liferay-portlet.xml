@@ -3,7 +3,7 @@
 
 <liferay-portlet-app>
 	<portlet>
-		<portlet-name>guestbook</portlet-name>
+		<portlet-name>test_room-booking_portlet</portlet-name>
 		<icon>/entry.png</icon>
 		<asset-renderer-factory>com.kooppi.guestbook.asset.EntryAssetRendererFactory</asset-renderer-factory>
 		<workflow-handler>com.kooppi.guestbook.workflow.EntryWorkflowHandler</workflow-handler>
@@ -14,20 +14,7 @@
 		</footer-portlet-javascript>
 		<css-class-wrapper>guestbook-portlet</css-class-wrapper>
 	</portlet>
-	<portlet>
-		<portlet-name>guestbook-admin</portlet-name>
-		<icon>/guestbook.png</icon>
-		<control-panel-entry-category>
-			site_administration.content
-		</control-panel-entry-category>
-		<control-panel-entry-weight>1.5</control-panel-entry-weight>
-		<asset-renderer-factory>com.kooppi.guestbook.asset.GuestbookAssetRendererFactory</asset-renderer-factory>
-		<header-portlet-css>/css/main.css</header-portlet-css>
-		<footer-portlet-javascript>
-			/js/main.js
-		</footer-portlet-javascript>
-		<css-class-wrapper>guestbook-admin-portlet</css-class-wrapper>
-	</portlet>
+	
 	<role-mapper>
 		<role-name>administrator</role-name>
 		<role-link>Administrator</role-link>

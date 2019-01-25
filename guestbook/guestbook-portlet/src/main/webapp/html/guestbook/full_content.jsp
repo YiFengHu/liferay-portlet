@@ -1,16 +1,16 @@
 <%@include file="/html/init.jsp"%>
 
 <%
-Entry entry = (Entry)request.getAttribute("gb_entry");
+Entry entry = (Entry)request.getAttribute("rm_entry");
 
 entry = entry.toEscapedModel();
 %>
 
 <dl>
-        <dt>Guestbook</dt>
-        <dd><%= GuestbookLocalServiceUtil.getGuestbook(entry.getGuestbookId()).getName() %></dd>
-        <dt>Name</dt>
-        <dd><%= entry.getName() %></dd>
-        <dt>Message</dt>
-        <dd><%= entry.getMessage() %></dd>
+        <dt>Conference Room</dt>
+        <dd><%= entry.getConferenceRoomName() %></dd>
+        <dt>User Name</dt>
+        <dd><%= entry.getUserName() %></dd>
+        <dt>Use Date</dt>
+        <dd><%= entry.getUseDate() %></dd>
 </dl>

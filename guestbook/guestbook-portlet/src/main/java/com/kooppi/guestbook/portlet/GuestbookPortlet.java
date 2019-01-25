@@ -61,8 +61,8 @@ public class GuestbookPortlet extends MVCPortlet{
 		         Entry.class.getName(), request);
 
 		    String userName = ParamUtil.getString(request, "name");
-		    String email = ParamUtil.getString(request, "email");
-		    String message = ParamUtil.getString(request, "message");
+		    String conferenceRoomName = ParamUtil.getString(request, "conferenceRoomName");
+		    String useDate = ParamUtil.getString(request, "useDate");
 		    long guestbookId = ParamUtil.getLong(request, "guestbookId");
 		    long entryId = ParamUtil.getLong(request, "entryId");
 
@@ -71,7 +71,7 @@ public class GuestbookPortlet extends MVCPortlet{
 		       try {
 
 		         EntryLocalServiceUtil.updateEntry(serviceContext.getUserId(),
-		              guestbookId, entryId, userName, email, message,
+		              guestbookId, entryId, userName, conferenceRoomName, useDate,
 		              serviceContext);
 
 		         SessionMessages.add(request, "entryAdded");
@@ -80,7 +80,7 @@ public class GuestbookPortlet extends MVCPortlet{
 		              Long.toString(guestbookId));
 
 		       } catch (Exception e) {
-
+		    	   e.printStackTrace();
 		         SessionErrors.add(request, e.getClass().getName());
 
 		                            PortalUtil.copyRequestParameters(request, response);
@@ -94,7 +94,7 @@ public class GuestbookPortlet extends MVCPortlet{
 
 		       try {
 		         EntryLocalServiceUtil.addEntry(serviceContext.getUserId(),
-		              guestbookId, userName, email, message, serviceContext);
+		              guestbookId, userName, conferenceRoomName, useDate, serviceContext);
 
 		         SessionMessages.add(request, "entryAdded");
 
@@ -102,6 +102,7 @@ public class GuestbookPortlet extends MVCPortlet{
 		              Long.toString(guestbookId));
 
 		       } catch (Exception e) {
+		    	   e.printStackTrace();
 		         SessionErrors.add(request, e.getClass().getName());
 
 		                            PortalUtil.copyRequestParameters(request, response);

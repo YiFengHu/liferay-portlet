@@ -68,6 +68,8 @@ public class GuestbookLocalServiceClp implements GuestbookLocalService {
     private String[] _methodParameterTypes29;
     private String _methodName30;
     private String[] _methodParameterTypes30;
+    private String _methodName31;
+    private String[] _methodParameterTypes31;
 
     public GuestbookLocalServiceClp(InvokableLocalService invokableLocalService) {
         _invokableLocalService = invokableLocalService;
@@ -223,6 +225,10 @@ public class GuestbookLocalServiceClp implements GuestbookLocalService {
                 "long", "long", "int",
                 "com.liferay.portal.service.ServiceContext"
             };
+
+        _methodName31 = "assignTaskOneLevel";
+
+        _methodParameterTypes31 = new String[] {  };
     }
 
     @Override
@@ -1140,5 +1146,22 @@ public class GuestbookLocalServiceClp implements GuestbookLocalService {
         }
 
         return (com.kooppi.guestbook.model.Guestbook) ClpSerializer.translateOutput(returnObj);
+    }
+
+    @Override
+    public void assignTaskOneLevel() {
+        try {
+            _invokableLocalService.invokeMethod(_methodName31,
+                _methodParameterTypes31, new Object[] {  });
+        } catch (Throwable t) {
+            t = ClpSerializer.translateThrowable(t);
+
+            if (t instanceof RuntimeException) {
+                throw (RuntimeException) t;
+            } else {
+                throw new RuntimeException(t.getClass().getName() +
+                    " is not a valid exception");
+            }
+        }
     }
 }

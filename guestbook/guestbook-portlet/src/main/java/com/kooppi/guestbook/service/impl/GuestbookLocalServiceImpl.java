@@ -22,6 +22,7 @@ import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.service.WorkflowInstanceLinkLocalServiceUtil;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetLinkConstants;
 
@@ -75,8 +76,8 @@ public class GuestbookLocalServiceImpl extends GuestbookLocalServiceBaseImpl {
 
 	    guestbookPersistence.update(guestbook);
 	
-	    resourceLocalService.addResources(user.getCompanyId(), groupId, userId,
-	                    Guestbook.class.getName(), guestbookId, false, true, true);
+//	    resourceLocalService.addResources(user.getCompanyId(), groupId, userId,
+//	                    Guestbook.class.getName(), guestbookId, false, true, true);
 	
 	    AssetEntry assetEntry = assetEntryLocalService.updateEntry(userId,
 	                    groupId, guestbook.getCreateDate(),
@@ -125,10 +126,10 @@ public class GuestbookLocalServiceImpl extends GuestbookLocalServiceBaseImpl {
 	
 	    guestbookPersistence.update(guestbook);
 	
-	    resourceLocalService.updateResources(serviceContext.getCompanyId(),
-	                    serviceContext.getScopeGroupId(), name, guestbookId,
-	                    serviceContext.getGroupPermissions(),
-	                    serviceContext.getGuestPermissions());
+//	    resourceLocalService.updateResources(serviceContext.getCompanyId(),
+//	                    serviceContext.getScopeGroupId(), name, guestbookId,
+//	                    serviceContext.getGroupPermissions(),
+//	                    serviceContext.getGuestPermissions());
 	
 	    AssetEntry assetEntry = assetEntryLocalService.updateEntry(guestbook.getUserId(),
 	                    guestbook.getGroupId(), guestbook.getCreateDate(),
@@ -166,10 +167,10 @@ public class GuestbookLocalServiceImpl extends GuestbookLocalServiceBaseImpl {
 	                            serviceContext);
 	    }
 	
-	    resourceLocalService.deleteResource(serviceContext.getCompanyId(),
-	                    Guestbook.class.getName(), ResourceConstants.SCOPE_INDIVIDUAL,
-	                    guestbookId);
-	
+//	    resourceLocalService.deleteResource(serviceContext.getCompanyId(),
+//	                    Guestbook.class.getName(), ResourceConstants.SCOPE_INDIVIDUAL,
+//	                    guestbookId);
+//	
 	    AssetEntry assetEntry = assetEntryLocalService.fetchEntry(
 	                    Guestbook.class.getName(), guestbookId);
 	
@@ -239,8 +240,11 @@ public class GuestbookLocalServiceImpl extends GuestbookLocalServiceBaseImpl {
 		       assetEntryLocalService.updateVisible(Guestbook.class.getName(),
 		          guestbookId, false);
 		    }
-
 		    return guestbook;
 		}
 
+	
+	public void assignTaskOneLevel() {
+		new Date();
+	}
 }

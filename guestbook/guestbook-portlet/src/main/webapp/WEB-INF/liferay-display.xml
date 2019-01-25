@@ -2,11 +2,11 @@
 <!DOCTYPE display PUBLIC "-//Liferay//DTD Display 6.2.0//EN" "http://www.liferay.com/dtd/liferay-display_6_2_0.dtd">
 
 <display>
-	<category name="category.sample">
-		<portlet id="guestbook" />
+	<category name="Room Booking">
+		<portlet id="test_room-booking_portlet" />
 	</category>
 	
-	<category name="category.hidden">
+	<!-- <category name="category.hidden">
     <portlet id="guestbook-admin"></portlet>
-</category>
+</category> -->
 </display>

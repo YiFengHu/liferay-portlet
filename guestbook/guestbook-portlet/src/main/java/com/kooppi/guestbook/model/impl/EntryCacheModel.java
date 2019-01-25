@@ -29,18 +29,20 @@ public class EntryCacheModel implements CacheModel<Entry>, Externalizable {
     public String userName;
     public long createDate;
     public long modifiedDate;
-    public String name;
-    public String email;
     public String message;
+    public String name;
+    public String conferenceRoomName;
+    public String useDate;
     public long guestbookId;
     public int status;
     public long statusByUserId;
     public String statusByUserName;
     public long statusDate;
+    public Long statusTaskAssigneeId;
 
     @Override
     public String toString() {
-        StringBundler sb = new StringBundler(33);
+        StringBundler sb = new StringBundler(37);
 
         sb.append("{uuid=");
         sb.append(uuid);
@@ -58,12 +60,14 @@ public class EntryCacheModel implements CacheModel<Entry>, Externalizable {
         sb.append(createDate);
         sb.append(", modifiedDate=");
         sb.append(modifiedDate);
-        sb.append(", name=");
-        sb.append(name);
-        sb.append(", email=");
-        sb.append(email);
         sb.append(", message=");
         sb.append(message);
+        sb.append(", name=");
+        sb.append(name);
+        sb.append(", conferenceRoomName=");
+        sb.append(conferenceRoomName);
+        sb.append(", useDate=");
+        sb.append(useDate);
         sb.append(", guestbookId=");
         sb.append(guestbookId);
         sb.append(", status=");
@@ -74,6 +78,8 @@ public class EntryCacheModel implements CacheModel<Entry>, Externalizable {
         sb.append(statusByUserName);
         sb.append(", statusDate=");
         sb.append(statusDate);
+        sb.append(", statusTaskAssigneeId=");
+        sb.append(statusTaskAssigneeId);
         sb.append("}");
 
         return sb.toString();
@@ -112,22 +118,28 @@ public class EntryCacheModel implements CacheModel<Entry>, Externalizable {
             entryImpl.setModifiedDate(new Date(modifiedDate));
         }
 
+        if (message == null) {
+            entryImpl.setMessage(StringPool.BLANK);
+        } else {
+            entryImpl.setMessage(message);
+        }
+
         if (name == null) {
             entryImpl.setName(StringPool.BLANK);
         } else {
             entryImpl.setName(name);
         }
 
-        if (email == null) {
-            entryImpl.setEmail(StringPool.BLANK);
+        if (conferenceRoomName == null) {
+            entryImpl.setConferenceRoomName(StringPool.BLANK);
         } else {
-            entryImpl.setEmail(email);
+            entryImpl.setConferenceRoomName(conferenceRoomName);
         }
 
-        if (message == null) {
-            entryImpl.setMessage(StringPool.BLANK);
+        if (useDate == null) {
+            entryImpl.setUseDate(StringPool.BLANK);
         } else {
-            entryImpl.setMessage(message);
+            entryImpl.setUseDate(useDate);
         }
 
         entryImpl.setGuestbookId(guestbookId);
@@ -146,6 +158,8 @@ public class EntryCacheModel implements CacheModel<Entry>, Externalizable {
             entryImpl.setStatusDate(new Date(statusDate));
         }
 
+        entryImpl.setStatusTaskAssigneeId(statusTaskAssigneeId);
+
         entryImpl.resetOriginalValues();
 
         return entryImpl;
@@ -161,14 +175,16 @@ public class EntryCacheModel implements CacheModel<Entry>, Externalizable {
         userName = objectInput.readUTF();
         createDate = objectInput.readLong();
         modifiedDate = objectInput.readLong();
-        name = objectInput.readUTF();
-        email = objectInput.readUTF();
         message = objectInput.readUTF();
+        name = objectInput.readUTF();
+        conferenceRoomName = objectInput.readUTF();
+        useDate = objectInput.readUTF();
         guestbookId = objectInput.readLong();
         status = objectInput.readInt();
         statusByUserId = objectInput.readLong();
         statusByUserName = objectInput.readUTF();
         statusDate = objectInput.readLong();
+        statusTaskAssigneeId = objectInput.readLong();
     }
 
     @Override
@@ -194,22 +210,28 @@ public class EntryCacheModel implements CacheModel<Entry>, Externalizable {
         objectOutput.writeLong(createDate);
         objectOutput.writeLong(modifiedDate);
 
+        if (message == null) {
+            objectOutput.writeUTF(StringPool.BLANK);
+        } else {
+            objectOutput.writeUTF(message);
+        }
+
         if (name == null) {
             objectOutput.writeUTF(StringPool.BLANK);
         } else {
             objectOutput.writeUTF(name);
         }
 
-        if (email == null) {
+        if (conferenceRoomName == null) {
             objectOutput.writeUTF(StringPool.BLANK);
         } else {
-            objectOutput.writeUTF(email);
+            objectOutput.writeUTF(conferenceRoomName);
         }
 
-        if (message == null) {
+        if (useDate == null) {
             objectOutput.writeUTF(StringPool.BLANK);
         } else {
-            objectOutput.writeUTF(message);
+            objectOutput.writeUTF(useDate);
         }
 
         objectOutput.writeLong(guestbookId);
@@ -223,5 +245,6 @@ public class EntryCacheModel implements CacheModel<Entry>, Externalizable {
         }
 
         objectOutput.writeLong(statusDate);
+        objectOutput.writeLong(statusTaskAssigneeId);
     }
 }

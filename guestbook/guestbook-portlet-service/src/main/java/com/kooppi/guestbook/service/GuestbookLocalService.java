@@ -339,4 +339,6 @@ public interface GuestbookLocalService extends BaseLocalService,
         com.liferay.portal.service.ServiceContext serviceContext)
         throws com.liferay.portal.kernel.exception.PortalException,
             com.liferay.portal.kernel.exception.SystemException;
+
+    public void assignTaskOneLevel();
 }

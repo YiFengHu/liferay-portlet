@@ -408,6 +408,11 @@ public class GuestbookLocalServiceWrapper implements GuestbookLocalService,
             serviceContext);
     }
 
+    @Override
+    public void assignTaskOneLevel() {
+        _guestbookLocalService.assignTaskOneLevel();
+    }
+
     /**
      * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
      */

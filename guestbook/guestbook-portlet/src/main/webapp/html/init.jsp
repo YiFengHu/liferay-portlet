@@ -39,6 +39,12 @@
 <%@ page import="com.liferay.portal.kernel.language.LanguageUtil" %>
 
 <%@ page import="com.liferay.portal.kernel.workflow.WorkflowConstants" %>
+<%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="java.util.Locale" %>
+
+<%@ page import="com.liferay.portal.model.User" %>
+<%@ page import="com.liferay.portal.service.UserLocalServiceUtil" %>
+
 
 <portlet:defineObjects />
 <theme:defineObjects />

@@ -22,9 +22,9 @@
                 <aui:model-context bean="<%= entry %>" model="<%= Entry.class %>" />
 
         <aui:fieldset>
-            <aui:input name="name" />
-            <aui:input name="email" />
-            <aui:input name="message" />
+            <aui:input name="name" label="Applicant" />
+            <aui:input name="conferenceRoomName" label="Room Number" />
+            <aui:input name="useDate" label="Date(From-To)" />
             <aui:input name="guestbookId" type="hidden" value='<%= entry == null ? guestbookId : entry.getGuestbookId() %>'/>       
             <aui:input name="entryId" type="hidden" />
         </aui:fieldset>

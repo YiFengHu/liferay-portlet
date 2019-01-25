@@ -16,6 +16,7 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
+import com.liferay.portal.kernel.workflow.WorkflowTaskManager;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
@@ -44,14 +45,16 @@ public class EntryLocalServiceImpl extends EntryLocalServiceBaseImpl {
      */
 	
 	public Entry addEntry(long userId, long guestbookId, String name,
-            String email, String message, ServiceContext serviceContext) throws PortalException, SystemException {
+            String roomNumber, String useDate, ServiceContext serviceContext) throws PortalException, SystemException {
 	    long groupId = serviceContext.getScopeGroupId();
+	    
+	    WorkflowTaskManager a;
 	
 	    User user = userPersistence.findByPrimaryKey(userId);
 	
 	    Date now = new Date();
 	
-	    validate(name, email, message);
+	    validate(name, roomNumber, useDate);
 	
 	    long entryId = counterLocalService.increment();
 	
@@ -67,21 +70,22 @@ public class EntryLocalServiceImpl extends EntryLocalServiceBaseImpl {
 	    entry.setExpandoBridgeAttributes(serviceContext);
 	    entry.setGuestbookId(guestbookId);
 	    entry.setName(name);
-	    entry.setEmail(email);
-	    entry.setMessage(message);
+	    entry.setMessage("");
+	    entry.setConferenceRoomName(roomNumber);
+	    entry.setUseDate(useDate);
         entry.setStatus(WorkflowConstants.STATUS_DRAFT);
 
 	    entryPersistence.update(entry);
 	
-	    resourceLocalService.addResources(user.getCompanyId(), groupId, userId,
-	                    Entry.class.getName(), entryId, false, true, true);
+//	    resourceLocalService.addResources(user.getCompanyId(), groupId, userId,
+//	                    Entry.class.getName(), entryId, false, true, true);
 	
 	    AssetEntry assetEntry = assetEntryLocalService.updateEntry(userId,
 	                    groupId, entry.getCreateDate(), entry.getModifiedDate(),
 	                    Entry.class.getName(), entryId, entry.getUuid(), 0,
 	                    serviceContext.getAssetCategoryIds(),
 	                    serviceContext.getAssetTagNames(), true, null, null, null,
-	                    ContentTypes.TEXT_HTML, entry.getMessage(), null, null, null,
+	                    ContentTypes.TEXT_HTML, "Book Conference Room ("+roomNumber+") at "+useDate+" by "+name, null, null, null,
 	                    null, 0, 0, null, false);
 	
 	    assetLinkLocalService.updateLinks(userId, assetEntry.getEntryId(),
@@ -106,9 +110,9 @@ public class EntryLocalServiceImpl extends EntryLocalServiceBaseImpl {
 	
 	    Entry entry = getEntry(entryId);
 	
-	    resourceLocalService.deleteResource(serviceContext.getCompanyId(),
-	                    Entry.class.getName(), ResourceConstants.SCOPE_INDIVIDUAL,
-	                    entryId);
+//	    resourceLocalService.deleteResource(serviceContext.getCompanyId(),
+//	                    Entry.class.getName(), ResourceConstants.SCOPE_INDIVIDUAL,
+//	                    entryId);
 	
 	    AssetEntry assetEntry = assetEntryLocalService.fetchEntry(
 	                    Entry.class.getName(), entryId);
@@ -129,7 +133,7 @@ public class EntryLocalServiceImpl extends EntryLocalServiceBaseImpl {
 
 	
 	public Entry updateEntry(long userId, long guestbookId, long entryId,
-            String name, String email, String message,
+            String name, String roomNumber, String useDate,
             ServiceContext serviceContext) throws PortalException,
             SystemException {
 	    long groupId = serviceContext.getScopeGroupId();
@@ -138,31 +142,32 @@ public class EntryLocalServiceImpl extends EntryLocalServiceBaseImpl {
 	
 	    Date now = new Date();
 	
-	    validate(name, email, message);
+	    validate(name, roomNumber, useDate);
 	
 	    Entry entry = getEntry(entryId);
 	
 	    entry.setUserId(userId);
 	    entry.setUserName(user.getFullName());
 	    entry.setName(name);
-	    entry.setEmail(email);
-	    entry.setMessage(message);
+	    entry.setMessage("");
+	    entry.setConferenceRoomName(roomNumber);
+	    entry.setUseDate(useDate);
 	    entry.setModifiedDate(serviceContext.getModifiedDate(now));
 	    entry.setExpandoBridgeAttributes(serviceContext);
 	
 	    entryPersistence.update(entry);
 	
-	    resourceLocalService.updateResources(user.getCompanyId(), groupId,
-	                    Entry.class.getName(), entryId,
-	                    serviceContext.getGroupPermissions(),
-	                    serviceContext.getGuestPermissions());
+//	    resourceLocalService.updateResources(user.getCompanyId(), groupId,
+//	                    Entry.class.getName(), entryId,
+//	                    serviceContext.getGroupPermissions(),
+//	                    serviceContext.getGuestPermissions());
 	
 	    AssetEntry assetEntry = assetEntryLocalService.updateEntry(userId,
 	                    groupId, entry.getCreateDate(), entry.getModifiedDate(),
 	                    Entry.class.getName(), entryId, entry.getUuid(), 0,
 	                    serviceContext.getAssetCategoryIds(),
 	                    serviceContext.getAssetTagNames(), true, null, null, null,
-	                    ContentTypes.TEXT_HTML, entry.getMessage(), null, null, null,
+	                    ContentTypes.TEXT_HTML, "Book Conference Room ("+roomNumber+") at "+useDate+" by "+name, null, null, null,
 	                    null, 0, 0, null, false);
 	
 	    assetLinkLocalService.updateLinks(userId, assetEntry.getEntryId(),
@@ -182,6 +187,14 @@ public class EntryLocalServiceImpl extends EntryLocalServiceBaseImpl {
 	    return entryPersistence.findByG_G(groupId, guestbookId);
 	}
 	
+	public List<Entry> getEntriesByGroup(long groupId) throws SystemException {
+	    return entryPersistence.findByGroupId(groupId);
+	}
+	
+	public int getEntriesCountByGroup(long groupId) throws SystemException {
+	    return entryPersistence.countByGroupId(groupId);
+	}
+	
 	public List<Entry> getEntries(long groupId, long guestbookId, int status, int start,
 		       int end) throws SystemException {
 		    return entryPersistence.findByG_G_S(groupId, guestbookId, WorkflowConstants.STATUS_APPROVED, 
@@ -192,25 +205,25 @@ public class EntryLocalServiceImpl extends EntryLocalServiceBaseImpl {
 		return entryPersistence.countByG_G_S(groupId, guestbookId, WorkflowConstants.STATUS_APPROVED);
 	}
 	
-	protected void validate (String name, String email, String entry) 
+	protected void validate (String name, String roomNumber, String useDate) 
 	        throws PortalException {
 	    if (Validator.isNull(name)) {
 	        throw new EntryNameException();
 	    }
 
-	    if (!Validator.isEmailAddress(email)) {
+	    if (Validator.isNull(roomNumber)) {
 	        throw new EntryEmailException();
 	    }
 
-	    if (Validator.isNull(entry)) {
+	    if (Validator.isNull(useDate)) {
 	        throw new EntryMessageException();
 	    }
 	}
 	
-	public Entry updateStatus(long userId, long entryId, int status,
+	public Entry updateStatus(long userId, long entryId, int status, long assigneeId,
 		       ServiceContext serviceContext) throws PortalException,
 		       SystemException {
-
+			
 		    User user = userLocalService.getUser(userId);
 		    Entry entry = getEntry(entryId);
 
@@ -218,7 +231,8 @@ public class EntryLocalServiceImpl extends EntryLocalServiceBaseImpl {
 		    entry.setStatusByUserId(userId);
 		    entry.setStatusByUserName(user.getFullName());
 		    entry.setStatusDate(new Date());
-
+		    entry.setStatusTaskAssigneeId(assigneeId);
+ 
 		    entryPersistence.update(entry);
 
 		    if (status == WorkflowConstants.STATUS_APPROVED) {
@@ -235,4 +249,14 @@ public class EntryLocalServiceImpl extends EntryLocalServiceBaseImpl {
 		    return entry;
 		}
 
+	public int getUpperLevelApprover() {
+//		System.out.println("FooLocalServiceImpl");
+//		System.out.println("companyId = "+companyId);
+//		System.out.println("entryClassName = "+entryClassName);
+//		System.out.println("entryClassPK = "+entryClassPK);
+//		System.out.println("groupId = "+groupId);
+//		System.out.println("serviceContext = "+serviceContext);
+//		System.out.println("userId = "+userId);
+		return 22516;
+	}
 }

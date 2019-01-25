@@ -1,13 +1,13 @@
 <?xml version="1.0"?>
 
 <deployment xmlns="http://xml.apache.org/axis/wsdd/" xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
-	<service name="Plugin_guestbook_EntryService" provider="java:RPC" style="rpc" use="encoded">
+	<service name="Plugin_rm_EntryService" provider="java:RPC" style="rpc" use="encoded">
 		<parameter name="allowedMethods" value="*" />
 		<parameter name="className" value="com.kooppi.guestbook.service.http.EntryServiceSoap" />
 		<parameter name="typeMappingVersion" value="1.2" />
 		<parameter name="wsdlPortType" value="EntryServiceSoap" />
 		<parameter name="wsdlServiceElement" value="EntryServiceSoapService" />
-		<parameter name="wsdlServicePort" value="Plugin_guestbook_EntryService" />
+		<parameter name="wsdlServicePort" value="Plugin_rm_EntryService" />
 		<parameter name="wsdlTargetNamespace" value="urn:http.service.guestbook.kooppi.com" />
 	</service>
 </deployment>

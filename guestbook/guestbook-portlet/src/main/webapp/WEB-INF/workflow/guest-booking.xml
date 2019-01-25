@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<workflow-definition xmlns="urn:liferay.com:liferay-workflow_6.2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:liferay.com:liferay-workflow_6.2.0 http://www.liferay.com/dtd/liferay-workflow-definition_6_2_0.xsd">
+    <name>guest-booking</name>
+    <version>1</version>
+    <state>
+        <name>new booking</name>
+        <metadata><![CDATA[{"xy":[60,140],"transitions":{"booking":{"xy":[-30,6],"bendpoints":[]}}}]]></metadata>
+        <initial>true</initial>
+        <transitions>
+            <transition>
+                <name>booking</name>
+                <target>review</target>
+            </transition>
+        </transitions>
+    </state>
+    <state>
+        <name>approved</name>
+        <metadata><![CDATA[{"xy":[580,140],"terminal":true}]]></metadata>
+        <actions>
+            <action>
+                <name>approve</name>
+                <script><![CDATA[Packages.com.liferay.portal.kernel.workflow.WorkflowStatusManagerUtil.updateStatus(Packages.com.liferay.portal.kernel.workflow.WorkflowConstants.toStatus("approved"), workflowContext);]]></script>
+                <script-language>javascript</script-language>
+                <execution-type>onEntry</execution-type>
+            </action>
+        </actions>
+    </state>
+    <task>
+        <name>review</name>
+        <metadata><![CDATA[{"xy":[311,125],"transitions":{"approve":{"xy":[-24,6],"bendpoints":[]}}}]]></metadata>
+        <actions>
+            <notification>
+                <name>notify site owner</name>
+                <template>There is a new booking waiting for review!</template>
+                <template-language>text</template-language>
+                <notification-type>user-notification</notification-type>
+                <execution-type>onEntry</execution-type>
+            </notification>
+            <action>
+                <name>update custom status</name>
+                <script><![CDATA[Packages.com.liferay.portal.kernel.workflow.WorkflowStatusManagerUtil.updateStatus(100, workflowContext);]]></script>
+                <script-language>javascript</script-language>
+                <execution-type>onEntry</execution-type>
+            </action>
+        </actions>
+        <assignments>
+            <roles>
+                <role>
+                    <role-type>site</role-type>
+                    <name>Site Owner</name>
+                    <auto-create>true</auto-create>
+                </role>
+            </roles>
+        </assignments>
+        <transitions>
+            <transition>
+                <name>reject</name>
+                <target>update</target>
+            </transition>
+            <transition>
+                <name>approve</name>
+                <target>approved</target>
+            </transition>
+        </transitions>
+    </task>
+    <task>
+        <name>update</name>
+        <metadata><![CDATA[{"xy":[320,330],"transitions":{"resubmit":{"bendpoints":[[393,285]]}}}]]></metadata>
+        <assignments>
+            <user></user>
+        </assignments>
+        <transitions>
+            <transition>
+                <name>resubmit</name>
+                <target>review</target>
+            </transition>
+        </transitions>
+    </task>
+</workflow-definition>

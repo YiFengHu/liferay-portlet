@@ -10,14 +10,16 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
-		<field name="name" type="String" />
-		<field name="email" type="String" />
 		<field name="message" type="String" />
+		<field name="name" type="String" />
+		<field name="conferenceRoomName" type="String" />
+		<field name="useDate" type="String" />
 		<field name="guestbookId" type="long" />
 		<field name="status" type="int" />
 		<field name="statusByUserId" type="long" />
 		<field name="statusByUserName" type="String" />
 		<field name="statusDate" type="Date" />
+		<field name="statusTaskAssigneeId" type="Long" />
 	</model>
 	<model name="com.kooppi.guestbook.model.Guestbook">
 		<field name="uuid" type="String" />

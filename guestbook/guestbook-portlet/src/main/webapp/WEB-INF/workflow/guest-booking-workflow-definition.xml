@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<workflow-definition xmlns="urn:liferay.com:liferay-workflow_6.2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:liferay.com:liferay-workflow_6.2.0 http://www.liferay.com/dtd/liferay-workflow-definition_6_2_0.xsd">
+    <name>guest-booking-workflow</name>
+    <version>1</version>
+    <state>
+        <name>new booking</name>
+        <metadata><![CDATA[{"xy":[50,50],"transitions":{"book":{"xy":[-28,6],"bendpoints":[]}}}]]></metadata>
+        <initial>true</initial>
+        <transitions>
+            <transition>
+                <name>book</name>
+                <target>review</target>
+            </transition>
+        </transitions>
+    </state>
+    <task>
+        <name>review</name>
+        <metadata><![CDATA[{"xy":[300,35],"transitions":{"reject":{"xy":[-54,4],"bendpoints":[]}}}]]></metadata>
+        <actions>
+            <notification>
+                <name>notify site owner</name>
+                <template>There is a new booking!</template>
+                <template-language>text</template-language>
+                <notification-type>user-notification</notification-type>
+                <execution-type>onEntry</execution-type>
+            </notification>
+        </actions>
+        <assignments>
+            <roles>
+                <role>
+                    <role-type>site</role-type>
+                    <name>Site Owner</name>
+                    <auto-create>true</auto-create>
+                </role>
+            </roles>
+        </assignments>
+        <transitions>
+            <transition>
+                <name>check in</name>
+                <target>check in</target>
+            </transition>
+            <transition>
+                <name>reject</name>
+                <target>update</target>
+            </transition>
+        </transitions>
+    </task>
+    <state>
+        <name>check in</name>
+        <metadata><![CDATA[{"xy":[590,50],"terminal":true}]]></metadata>
+        <actions>
+            <action>
+                <name>approve</name>
+                <script><![CDATA[Packages.com.liferay.portal.kernel.workflow.WorkflowStatusManagerUtil.updateStatus(Packages.com.liferay.portal.kernel.workflow.WorkflowConstants.toStatus("approved"), workflowContext);]]></script>
+                <script-language>javascript</script-language>
+                <execution-type>onEntry</execution-type>
+            </action>
+            <notification>
+                <name>notify user booking passed</name>
+                <template>A new booking is approved!</template>
+                <template-language>text</template-language>
+                <notification-type>user-notification</notification-type>
+                <execution-type>onEntry</execution-type>
+            </notification>
+        </actions>
+    </state>
+    <task>
+        <name>update</name>
+        <metadata><![CDATA[{"xy":[350,320],"transitions":{"resubmit":{"bendpoints":[[468,216]]}}}]]></metadata>
+        <actions>
+            <notification>
+                <name>notify guest booking rejected</name>
+                <template>Your booking is rejected. Please update your info and resubmit.</template>
+                <template-language>text</template-language>
+                <notification-type>user-notification</notification-type>
+                <execution-type>onEntry</execution-type>
+            </notification>
+        </actions>
+        <assignments>
+            <user></user>
+        </assignments>
+        <transitions>
+            <transition>
+                <name>resubmit</name>
+                <target>review</target>
+            </transition>
+        </transitions>
+    </task>
+</workflow-definition>

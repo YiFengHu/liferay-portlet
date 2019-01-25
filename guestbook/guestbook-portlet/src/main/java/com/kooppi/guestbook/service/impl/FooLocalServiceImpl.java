@@ -1,6 +1,7 @@
 package com.kooppi.guestbook.service.impl;
 
 import com.kooppi.guestbook.service.base.FooLocalServiceBaseImpl;
+import com.liferay.portal.service.ServiceContext;
 
 /**
  * The implementation of the foo local service.
@@ -22,4 +23,5 @@ public class FooLocalServiceImpl extends FooLocalServiceBaseImpl {
      *
      * Never reference this interface directly. Always use {@link com.kooppi.guestbook.service.FooLocalServiceUtil} to access the foo local service.
      */
+
 }

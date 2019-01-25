@@ -4,7 +4,7 @@
 <hibernate-mapping default-lazy="false" auto-import="false">
 	<import class="com.kooppi.guestbook.model.Entry" />
 	<import class="com.kooppi.guestbook.model.Guestbook" />
-	<class name="com.kooppi.guestbook.model.impl.EntryImpl" table="guestbook_Entry">
+	<class name="com.kooppi.guestbook.model.impl.EntryImpl" table="rm_Entry">
 		<cache usage="read-write" />
 		<id name="entryId" type="long">
 			<generator class="assigned" />
@@ -16,16 +16,18 @@
 		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="createDate" type="org.hibernate.type.TimestampType" />
 		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
-		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="email" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="message" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="conferenceRoomName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="useDate" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="guestbookId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="status" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property name="statusByUserId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="statusByUserName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="statusDate" type="org.hibernate.type.TimestampType" />
+		<property name="statusTaskAssigneeId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
-	<class name="com.kooppi.guestbook.model.impl.GuestbookImpl" table="guestbook_Guestbook">
+	<class name="com.kooppi.guestbook.model.impl.GuestbookImpl" table="rm_Guestbook">
 		<cache usage="read-write" />
 		<id name="guestbookId" type="long">
 			<generator class="assigned" />
